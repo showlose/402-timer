@@ -1,0 +1,1610 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>4-0-2 訓練計時器</title>
+
+
+<style>
+
+/* =========================================================
+   基本
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+
+    background: #111;
+    color: white;
+
+    font-family:
+        "Microsoft JhengHei",
+        "Noto Sans TC",
+        Arial,
+        sans-serif;
+}
+
+
+/* =========================================================
+   主畫面
+   ========================================================= */
+
+body {
+
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+
+.container {
+
+    width: 100%;
+    max-width: 700px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   標題
+   ========================================================= */
+
+h1 {
+
+    font-size: 42px;
+
+    margin: 0 0 8px 0;
+}
+
+
+.subtitle {
+
+    color: #999;
+
+    font-size: 20px;
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   次數選擇
+   ========================================================= */
+
+.settings {
+
+    background: #1d1d1d;
+
+    border-radius: 15px;
+
+    padding: 18px;
+
+    margin-bottom: 25px;
+}
+
+
+label {
+
+    font-size: 21px;
+}
+
+
+select {
+
+    margin-left: 10px;
+
+    font-size: 20px;
+
+    padding: 8px 15px;
+
+    border-radius: 8px;
+
+    border: none;
+}
+
+
+/* =========================================================
+   目前階段
+   ========================================================= */
+
+.phase {
+
+    min-height: 45px;
+
+    font-size: 32px;
+
+    color: #4ade80;
+
+    margin-top: 10px;
+}
+
+
+/* =========================================================
+   大型計時器
+   ========================================================= */
+
+.timer {
+
+    font-size: 120px;
+
+    font-weight: bold;
+
+    line-height: 1;
+
+    margin: 20px 0;
+}
+
+
+/* =========================================================
+   第幾下
+   ========================================================= */
+
+.rep {
+
+    font-size: 38px;
+
+    margin-bottom: 18px;
+}
+
+
+.rep span {
+
+    color: #4ade80;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   節奏
+   ========================================================= */
+
+.tempo {
+
+    font-size: 25px;
+
+    color: #aaa;
+
+    margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   按鈕
+   ========================================================= */
+
+.buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+
+button {
+
+    min-width: 140px;
+
+    font-size: 21px;
+
+    padding: 15px 25px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    background: #333;
+
+    color: white;
+
+    touch-action: manipulation;
+}
+
+
+button:hover {
+
+    background: #444;
+}
+
+
+.start {
+
+    background: #22c55e;
+
+    color: #000;
+
+    font-weight: bold;
+}
+
+
+.start:hover {
+
+    background: #16a34a;
+}
+
+
+.pause {
+
+    background: #f59e0b;
+
+    color: #000;
+
+    font-weight: bold;
+}
+
+
+.pause:hover {
+
+    background: #d97706;
+}
+
+
+.reset {
+
+    background: #dc2626;
+}
+
+
+.reset:hover {
+
+    background: #b91c1c;
+}
+
+
+/* =========================================================
+   狀態
+   ========================================================= */
+
+.status {
+
+    margin-top: 25px;
+
+    font-size: 18px;
+
+    color: #888;
+
+    min-height: 28px;
+}
+
+
+.finished {
+
+    color: #4ade80 !important;
+
+    font-size: 36px;
+}
+
+
+/* =========================================================
+   手機版
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+
+        padding: 15px;
+    }
+
+
+    h1 {
+
+        font-size: 32px;
+    }
+
+
+    .subtitle {
+
+        font-size: 17px;
+
+        margin-bottom: 20px;
+    }
+
+
+    .phase {
+
+        font-size: 27px;
+    }
+
+
+    .timer {
+
+        font-size: 90px;
+
+        margin: 18px 0;
+    }
+
+
+    .rep {
+
+        font-size: 30px;
+    }
+
+
+    .tempo {
+
+        font-size: 21px;
+    }
+
+
+    .buttons {
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        width: 100%;
+    }
+
+
+    button {
+
+        width: 100%;
+
+        min-width: 0;
+
+        padding: 16px 10px;
+
+        font-size: 20px;
+    }
+
+
+    .start {
+
+        grid-column: span 2;
+    }
+
+}
+
+
+/* =========================================================
+   更小手機
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .timer {
+
+        font-size: 75px;
+    }
+
+
+    h1 {
+
+        font-size: 28px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =====================================================
+         標題
+         ===================================================== -->
+
+    <h1>
+        4-0-2 訓練計時器
+    </h1>
+
+
+    <div class="subtitle">
+        4 秒下降 → 0 秒 → 2 秒上升
+    </div>
+
+
+
+    <!-- =====================================================
+         次數
+         ===================================================== -->
+
+    <div class="settings">
+
+        <label for="repSelect">
+            總次數：
+        </label>
+
+        <select id="repSelect">
+
+            <option value="1">1 下</option>
+
+            <option value="2">2 下</option>
+
+            <option value="3">3 下</option>
+
+            <option value="4">4 下</option>
+
+            <option value="5">5 下</option>
+
+            <option value="6">6 下</option>
+
+            <option value="7">7 下</option>
+
+            <option value="8">8 下</option>
+
+            <option value="9">9 下</option>
+
+            <option value="10" selected>
+                10 下
+            </option>
+
+        </select>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         Phase
+         ===================================================== -->
+
+    <div id="phase" class="phase">
+
+        準備開始
+
+    </div>
+
+
+
+    <!-- =====================================================
+         Timer
+         ===================================================== -->
+
+    <div id="timer" class="timer">
+
+        4.0
+
+    </div>
+
+
+
+    <!-- =====================================================
+         Rep
+         ===================================================== -->
+
+    <div class="rep">
+
+        第
+        <span id="repNumber">1</span>
+        下
+
+    </div>
+
+
+
+    <!-- =====================================================
+         節奏
+         ===================================================== -->
+
+    <div class="tempo">
+
+        4 - 0 - 2
+
+    </div>
+
+
+
+    <!-- =====================================================
+         按鈕
+         ===================================================== -->
+
+    <div class="buttons">
+
+
+        <button
+            id="startBtn"
+            class="start">
+
+            開始
+
+        </button>
+
+
+        <button
+            id="pauseBtn"
+            class="pause">
+
+            暫停
+
+        </button>
+
+
+        <button
+            id="resetBtn"
+            class="reset">
+
+            重設
+
+        </button>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         狀態
+         ===================================================== -->
+
+    <div id="status" class="status">
+
+        每一個 4-0-2 = 1 下
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   4-0-2 訓練計時器
+   =========================================================
+
+   每一下：
+
+   語音「一、四」
+       ↓
+   4 秒下降
+       ↓
+   0 秒
+       ↓
+   語音「二」
+       ↓
+   2 秒上升
+       ↓
+   完成第 1 下
+
+
+   下一下：
+
+   語音「二、四」
+       ↓
+   4 秒
+       ↓
+   0 秒
+       ↓
+   語音「二」
+       ↓
+   2 秒
+
+
+   最後：
+
+   語音「十、四」
+       ↓
+   4 秒
+       ↓
+   語音「二」
+       ↓
+   2 秒
+
+
+   重點：
+
+   0 秒完全沒有語音。
+
+   ========================================================= */
+
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
+const phaseElement =
+    document.getElementById("phase");
+
+const timerElement =
+    document.getElementById("timer");
+
+const repNumberElement =
+    document.getElementById("repNumber");
+
+const statusElement =
+    document.getElementById("status");
+
+const repSelect =
+    document.getElementById("repSelect");
+
+const startBtn =
+    document.getElementById("startBtn");
+
+const pauseBtn =
+    document.getElementById("pauseBtn");
+
+const resetBtn =
+    document.getElementById("resetBtn");
+
+
+/* =========================================================
+   中文數字
+   ========================================================= */
+
+const chineseNumbers = [
+
+    "",
+
+    "一",
+
+    "二",
+
+    "三",
+
+    "四",
+
+    "五",
+
+    "六",
+
+    "七",
+
+    "八",
+
+    "九",
+
+    "十"
+
+];
+
+
+/* =========================================================
+   訓練狀態
+   ========================================================= */
+
+let currentRep = 1;
+
+let currentPhase = "down";
+
+let running = false;
+
+let paused = false;
+
+
+/* =========================================================
+   Timer
+   ========================================================= */
+
+let phaseStartTime = 0;
+
+let phaseDuration = 4000;
+
+let pausedRemaining = 4000;
+
+let animationFrame = null;
+
+
+/* =========================================================
+   手機螢幕保持亮著
+   ========================================================= */
+
+let wakeLock = null;
+
+
+/*
+   嘗試鎖定螢幕喚醒。
+
+   部分手機瀏覽器支援。
+   不支援時不會影響程式。
+*/
+
+async function requestWakeLock() {
+
+    try {
+
+        if (
+            "wakeLock" in navigator
+        ) {
+
+            wakeLock =
+                await navigator.wakeLock.request(
+                    "screen"
+                );
+
+        }
+
+    }
+
+    catch (error) {
+
+        /*
+           不支援或被系統拒絕時，
+           不影響訓練。
+        */
+
+        console.log(
+            "Wake Lock unavailable"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   重新取得 Wake Lock
+   ========================================================= */
+
+document.addEventListener(
+    "visibilitychange",
+    async () => {
+
+        if (
+            document.visibilityState === "visible" &&
+            running
+        ) {
+
+            await requestWakeLock();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   釋放 Wake Lock
+   ========================================================= */
+
+async function releaseWakeLock() {
+
+    if (wakeLock) {
+
+        try {
+
+            await wakeLock.release();
+
+        }
+
+        catch (error) {
+
+        }
+
+        wakeLock = null;
+
+    }
+
+}
+
+
+/* =========================================================
+   總次數
+   ========================================================= */
+
+function getTotalReps() {
+
+    return parseInt(
+        repSelect.value,
+        10
+    );
+
+}
+
+
+/* =========================================================
+   語音
+
+   重要：
+
+   每一下開始：
+
+       「一、四」
+
+   4 秒後：
+
+       「二」
+
+   不再讀「零」。
+   ========================================================= */
+
+function speak(text) {
+
+    if (
+        !("speechSynthesis" in window)
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+       清除之前等待中的語音。
+
+       避免語音排隊造成：
+       四四
+       二二
+       等問題。
+    */
+
+    window.speechSynthesis.cancel();
+
+
+    const utterance =
+        new SpeechSynthesisUtterance(text);
+
+
+    /*
+       繁體中文
+    */
+
+    utterance.lang = "zh-TW";
+
+
+    /*
+       語速
+    */
+
+    utterance.rate = 0.9;
+
+
+    /*
+       音調
+    */
+
+    utterance.pitch = 1.0;
+
+
+    /*
+       音量
+    */
+
+    utterance.volume = 1.0;
+
+
+    window.speechSynthesis.speak(
+        utterance
+    );
+
+}
+
+
+/* =========================================================
+   更新畫面
+   ========================================================= */
+
+function updateDisplay(seconds) {
+
+    timerElement.textContent =
+        Math.max(
+            0,
+            seconds
+        ).toFixed(1);
+
+
+    repNumberElement.textContent =
+        currentRep;
+
+
+    if (
+        currentPhase === "down"
+    ) {
+
+        phaseElement.textContent =
+            "下降";
+
+    }
+
+    else if (
+        currentPhase === "zero"
+    ) {
+
+        phaseElement.textContent =
+            "0 秒";
+
+    }
+
+    else if (
+        currentPhase === "up"
+    ) {
+
+        phaseElement.textContent =
+            "上升";
+
+    }
+
+}
+
+
+/* =========================================================
+   第一下開始
+   ========================================================= */
+
+function startDownPhase() {
+
+    currentPhase = "down";
+
+    phaseDuration = 4000;
+
+    phaseStartTime =
+        performance.now();
+
+
+    /*
+       這一次語音是：
+
+       一、四
+
+       下一下：
+
+       二、四
+
+       三、四
+
+       ...
+
+       十、四
+    */
+
+    speak(
+        chineseNumbers[currentRep] +
+        "、四"
+    );
+
+
+    updateDisplay(4);
+
+    animate();
+
+}
+
+
+/* =========================================================
+   0 秒
+   ========================================================= */
+
+function startZeroPhase() {
+
+    currentPhase = "zero";
+
+
+    /*
+       顯示 0
+
+       不播放任何語音。
+    */
+
+    updateDisplay(0);
+
+
+    /*
+       0 秒沒有停頓時間，
+       直接進入 2 秒。
+
+       很短的延遲讓畫面能刷新。
+    */
+
+    setTimeout(
+        () => {
+
+            if (!running) {
+
+                return;
+
+            }
+
+            startUpPhase();
+
+        },
+        20
+    );
+
+}
+
+
+/* =========================================================
+   2 秒
+   ========================================================= */
+
+function startUpPhase() {
+
+    currentPhase = "up";
+
+    phaseDuration = 2000;
+
+    phaseStartTime =
+        performance.now();
+
+
+    /*
+       這裡只說：
+
+       二
+    */
+
+    speak("二");
+
+
+    updateDisplay(2);
+
+    animate();
+
+}
+
+
+/* =========================================================
+   精準計時
+   ========================================================= */
+
+function animate() {
+
+
+    if (
+        animationFrame !== null
+    ) {
+
+        cancelAnimationFrame(
+            animationFrame
+        );
+
+    }
+
+
+    function frame(now) {
+
+
+        if (!running) {
+
+            return;
+
+        }
+
+
+        const elapsed =
+            now - phaseStartTime;
+
+
+        const remaining =
+            (
+                phaseDuration -
+                elapsed
+            ) / 1000;
+
+
+        updateDisplay(
+            remaining
+        );
+
+
+        /*
+           目前 phase 結束
+        */
+
+        if (
+            elapsed >= phaseDuration
+        ) {
+
+
+            /*
+               4 秒結束
+
+               → 0 秒
+            */
+
+            if (
+                currentPhase === "down"
+            ) {
+
+                startZeroPhase();
+
+                return;
+
+            }
+
+
+            /*
+               2 秒結束
+
+               → 完成一個 4-0-2
+            */
+
+            if (
+                currentPhase === "up"
+            ) {
+
+                completeRep();
+
+                return;
+
+            }
+
+        }
+
+
+        animationFrame =
+            requestAnimationFrame(
+                frame
+            );
+
+    }
+
+
+    animationFrame =
+        requestAnimationFrame(
+            frame
+        );
+
+}
+
+
+/* =========================================================
+   完成一個 4-0-2
+   ========================================================= */
+
+function completeRep() {
+
+
+    /*
+       最後一下
+    */
+
+    if (
+        currentRep >= getTotalReps()
+    ) {
+
+        finishWorkout();
+
+        return;
+
+    }
+
+
+    /*
+       進入下一下
+    */
+
+    currentRep++;
+
+
+    statusElement.textContent =
+        "準備第 " +
+        currentRep +
+        " 下";
+
+
+    /*
+       很短的間隔。
+
+       然後新的：
+
+       「二、四」
+    */
+
+    setTimeout(
+        () => {
+
+            if (!running) {
+
+                return;
+
+            }
+
+            startDownPhase();
+
+        },
+        250
+    );
+
+}
+
+
+/* =========================================================
+   開始
+   ========================================================= */
+
+async function startWorkout() {
+
+
+    /*
+       如果已完成，
+       重新開始。
+    */
+
+    if (
+        !running &&
+        currentRep > getTotalReps()
+    ) {
+
+        resetWorkout();
+
+    }
+
+
+    /*
+       第一次開始
+    */
+
+    if (
+        !running &&
+        !paused
+    ) {
+
+        currentRep = 1;
+
+        running = true;
+
+        paused = false;
+
+
+        statusElement.textContent =
+            "開始訓練";
+
+
+        /*
+           手機上由按鈕點擊開始，
+           有利於瀏覽器允許語音播放。
+        */
+
+        if (
+            "speechSynthesis" in window
+        ) {
+
+            speechSynthesis.cancel();
+
+        }
+
+
+        /*
+           保持螢幕亮著
+        */
+
+        await requestWakeLock();
+
+
+        /*
+           開始第一下
+        */
+
+        startDownPhase();
+
+        return;
+
+    }
+
+
+    /*
+       暫停後恢復
+    */
+
+    if (paused) {
+
+        running = true;
+
+        paused = false;
+
+
+        phaseStartTime =
+            performance.now();
+
+
+        phaseDuration =
+            pausedRemaining * 1000;
+
+
+        statusElement.textContent =
+            "繼續";
+
+
+        await requestWakeLock();
+
+
+        /*
+           恢復時不重新唸：
+
+           一、四
+           或
+           二
+
+           只繼續原本計時。
+        */
+
+        animate();
+
+    }
+
+}
+
+
+/* =========================================================
+   暫停
+   ========================================================= */
+
+function pauseWorkout() {
+
+
+    if (!running) {
+
+        return;
+
+    }
+
+
+    const now =
+        performance.now();
+
+
+    const elapsed =
+        now - phaseStartTime;
+
+
+    pausedRemaining =
+        Math.max(
+            0,
+            (
+                phaseDuration -
+                elapsed
+            ) / 1000
+        );
+
+
+    running = false;
+
+    paused = true;
+
+
+    if (
+        animationFrame !== null
+    ) {
+
+        cancelAnimationFrame(
+            animationFrame
+        );
+
+        animationFrame = null;
+
+    }
+
+
+    /*
+       停止語音
+    */
+
+    if (
+        "speechSynthesis" in window
+    ) {
+
+        speechSynthesis.cancel();
+
+    }
+
+
+    phaseElement.textContent =
+        "已暫停";
+
+
+    statusElement.textContent =
+        "按「開始」繼續";
+
+
+    releaseWakeLock();
+
+}
+
+
+/* =========================================================
+   完成
+   ========================================================= */
+
+function finishWorkout() {
+
+
+    running = false;
+
+    paused = false;
+
+
+    if (
+        animationFrame !== null
+    ) {
+
+        cancelAnimationFrame(
+            animationFrame
+        );
+
+        animationFrame = null;
+
+    }
+
+
+    currentPhase = "finished";
+
+
+    timerElement.textContent =
+        "✓";
+
+
+    phaseElement.textContent =
+        "完成！";
+
+
+    phaseElement.classList.add(
+        "finished"
+    );
+
+
+    repNumberElement.textContent =
+        getTotalReps();
+
+
+    statusElement.textContent =
+        "完成 " +
+        getTotalReps() +
+        " 下";
+
+
+    /*
+       不播放「完成訓練」。
+
+       你要求語音只有：
+
+       一四
+       二
+       三四
+       二
+       ...
+
+       十四
+       二
+    */
+
+
+    currentRep =
+        getTotalReps() + 1;
+
+
+    releaseWakeLock();
+
+}
+
+
+/* =========================================================
+   重設
+   ========================================================= */
+
+function resetWorkout() {
+
+
+    running = false;
+
+    paused = false;
+
+
+    if (
+        animationFrame !== null
+    ) {
+
+        cancelAnimationFrame(
+            animationFrame
+        );
+
+        animationFrame = null;
+
+    }
+
+
+    /*
+       停止所有語音
+    */
+
+    if (
+        "speechSynthesis" in window
+    ) {
+
+        speechSynthesis.cancel();
+
+    }
+
+
+    releaseWakeLock();
+
+
+    currentRep = 1;
+
+    currentPhase = "down";
+
+    phaseDuration = 4000;
+
+    pausedRemaining = 4000;
+
+
+    phaseElement.classList.remove(
+        "finished"
+    );
+
+
+    phaseElement.textContent =
+        "準備開始";
+
+
+    timerElement.textContent =
+        "4.0";
+
+
+    repNumberElement.textContent =
+        "1";
+
+
+    statusElement.textContent =
+        "每一個 4-0-2 = 1 下";
+
+}
+
+
+/* =========================================================
+   次數改變
+   ========================================================= */
+
+repSelect.addEventListener(
+    "change",
+    resetWorkout
+);
+
+
+/* =========================================================
+   按鈕
+   ========================================================= */
+
+startBtn.addEventListener(
+    "click",
+    startWorkout
+);
+
+
+pauseBtn.addEventListener(
+    "click",
+    pauseWorkout
+);
+
+
+resetBtn.addEventListener(
+    "click",
+    resetWorkout
+);
+
+
+/* =========================================================
+   初始
+   ========================================================= */
+
+resetWorkout();
+
+</script>
+
+</body>
+
+</html>
+```
