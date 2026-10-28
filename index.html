@@ -1,569 +1,1610 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#244c91">
-<title>帶著恐懼前進｜心想事成、Routine、忍耐清單與目標清單</title>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>4-0-2 訓練計時器</title>
+
+
 <style>
-:root{color-scheme:light dark;--bg:#f4f6fa;--surface:#fff;--text:#182230;--muted:#687386;--line:#d8dfeb;--blue:#244c91;--blue2:#e5edff;--green:#16804a;--green-bg:#e4f7ec;--red:#bd3434;--red-bg:#fff0ed;--amber:#96610c;--amber-bg:#fff4d6;--field:#fff;--shadow:0 8px 24px rgba(30,50,90,.07)}
-@media(prefers-color-scheme:dark){:root{--bg:#111722;--surface:#1b2431;--text:#ecf1f8;--muted:#a7b2c4;--line:#3b4658;--blue:#a9c6ff;--blue2:#253958;--green:#7cdaa7;--green-bg:#183b2a;--red:#ff9b91;--red-bg:#482321;--amber:#ffd27a;--amber-bg:#42351b;--field:#121a25;--shadow:0 8px 24px rgba(0,0,0,.16)}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Microsoft JhengHei","PingFang TC",sans-serif;line-height:1.5}button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:9px;padding:8px 11px;background:var(--surface);color:var(--text);font-weight:650}button:disabled{opacity:.45;cursor:not-allowed}button.primary{background:#23663f;color:#fff;border-color:#23663f}button.danger{color:var(--red)}button.small{font-size:12px;padding:5px 8px}.page{max-width:1200px;margin:auto;padding:clamp(12px,2.2vw,24px)}.head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}.head h1{font-size:clamp(24px,3vw,34px);line-height:1.2;margin:0 0 8px}.sub{color:var(--muted);font-size:14px;max-width:850px}.rule{margin-top:14px;padding:12px 15px;border-left:4px solid #4779c9;background:var(--blue2);border-radius:8px;max-width:900px;font-weight:600}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.section{margin-top:24px}.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:12px}.section h2{font-size:23px;margin:0}.section-desc{font-size:13px;color:var(--muted);margin-top:3px}.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}.notice{display:none;margin:12px 0;padding:12px 14px;border-radius:10px;background:var(--amber-bg);color:var(--amber);font-weight:700}.notice.show{display:block}.score-panel{background:var(--surface);border:2px solid var(--blue);border-radius:16px;padding:16px;margin:16px 0;box-shadow:var(--shadow)}.score-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.score-label{font-size:13px;color:var(--muted);font-weight:800}.score-number{font-size:clamp(36px,6vw,54px);line-height:1;font-weight:900;letter-spacing:-.03em;font-variant-numeric:tabular-nums}.score-controls{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:12px}.score-controls input{width:100px;max-width:32vw;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px}.score-caption{font-size:12px;color:var(--muted);margin-top:8px}.form-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:end}.field label,.field-label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:750}.field input,.field textarea,.field select,.form-grid input{width:100%;min-width:0;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px}.field textarea{display:block;min-height:84px;resize:vertical;line-height:1.55}.manifestation-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}.manifestation-card{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--surface);min-width:0;box-shadow:var(--shadow)}.manifestation-card.is-done{border-left:4px solid var(--green)}.manifestation-card-head{display:flex;gap:8px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px}.manifestation-title-input{flex:1;min-width:min(100%,240px);font-weight:800;font-size:18px;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px}.manifestation-status{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:750;background:var(--blue2);color:var(--blue)}.manifestation-status.good{background:var(--green-bg);color:var(--green)}.manifestation-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}.manifestation-fields .wide{grid-column:1/-1}.fear-group{min-width:0;margin:0;padding:0;border:0}.fear-group legend{display:block;font-size:12px;color:var(--muted);margin-bottom:7px;font-weight:750}.fear-options{display:flex;flex-wrap:wrap;gap:7px}.fear-option{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:7px 10px;font-size:13px;cursor:pointer}.fear-option input{width:16px;height:16px;accent-color:var(--green);margin:0}.manifestation-card-actions{display:flex;justify-content:flex-end;gap:7px;margin-top:13px;flex-wrap:wrap}.completed-at{font-size:12px;color:var(--muted)}.empty-state{padding:18px;color:var(--muted);text-align:center;border:1px dashed var(--line);border-radius:10px}.goal-overview{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:10px 0 14px;color:var(--muted);font-size:13px}.goal-overview strong{color:var(--text)}.goal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.goal-folder{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:0}.goal-folder[open]{box-shadow:var(--shadow)}.goal-folder summary{cursor:pointer;list-style:none;padding:14px 15px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:800}.goal-folder summary::-webkit-details-marker{display:none}.goal-folder summary:before{content:'▸';color:var(--muted);margin-right:1px}.goal-folder[open] summary:before{content:'▾'}.folder-name{flex:1;overflow-wrap:anywhere}.folder-progress{font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap;background:var(--bg);padding:3px 8px;border-radius:999px}.folder-content{padding:0 14px 14px}.folder-tools{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap;padding:0 0 9px}.goal-list{list-style:none;padding:0;margin:0;display:grid;gap:3px}.goal-li{display:flex;align-items:center;gap:8px;border-radius:7px;padding:5px 6px;min-width:0}.goal-li:hover{background:var(--bg)}.goal-li label{display:flex;align-items:flex-start;gap:9px;flex:1;min-width:0;cursor:pointer}.goal-li input[type=checkbox]{width:17px;height:17px;margin:3px 0 0;flex-shrink:0;accent-color:var(--green)}.goal-title{overflow-wrap:anywhere}.goal-li.done .goal-title{text-decoration:line-through;color:var(--muted);opacity:.8}.item-actions{display:flex;gap:3px;opacity:.85}.item-actions button{font-size:11px;padding:3px 6px}.folder-create{display:flex;gap:8px;flex-wrap:wrap}.folder-create input,.add-goal-form input{flex:1;min-width:170px;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px 11px}.add-goal-form{display:flex;gap:7px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}.footer-note{font-size:12px;color:var(--muted);margin:18px 2px;line-height:1.7}.history-meta{display:flex;gap:6px 12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}.history-value{white-space:pre-wrap;overflow-wrap:anywhere;margin-top:8px;padding:9px 10px;background:var(--bg);border-radius:8px;font-size:13px}.history-value strong{display:block;font-size:12px;color:var(--muted);margin-bottom:3px}.history-fears{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0}.history-fear{display:inline-flex;background:var(--blue2);color:var(--blue);border-radius:999px;padding:3px 8px;font-size:11px}.hidden{display:none!important}.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modal-backdrop.show{display:flex}.modal{max-width:520px;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:20px;box-shadow:var(--shadow)}.modal h2{margin:0 0 8px}.modal p{margin:0 0 14px;color:var(--muted)}.modal-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.filter-input{min-width:210px;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
-@media(max-width:800px){.manifestation-fields{grid-template-columns:1fr}.manifestation-fields .wide{grid-column:auto}.goal-grid{grid-template-columns:1fr}}
-@media(max-width:560px){.page{padding:12px}.panel{padding:12px}.score-panel{padding:13px}.form-grid{grid-template-columns:1fr}.score-controls input{flex:1;min-width:65px}.manifestation-card{padding:11px}.item-actions{opacity:1}.goal-folder summary{padding:12px}.folder-content{padding:0 9px 11px}.fear-option{font-size:12px;padding:6px 8px}}
 
-.endurance-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
-.endurance-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px;min-width:0;box-shadow:var(--shadow)}
-.endurance-card.active{border-left:4px solid var(--amber)}
-.endurance-card.ended{border-left:4px solid var(--green)}
-.endurance-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.endurance-title{font-size:16px;font-weight:800;overflow-wrap:anywhere;flex:1;min-width:140px}
-.endurance-status{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:750;background:var(--blue2);color:var(--blue)}
-.endurance-status.active{background:var(--amber-bg);color:var(--amber)}
-.endurance-status.ended{background:var(--green-bg);color:var(--green)}
-.endurance-times{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
-.endurance-time{padding:9px 10px;background:var(--bg);border-radius:8px;font-size:13px;overflow-wrap:anywhere}
-.endurance-time strong{display:block;color:var(--muted);font-size:11px;margin-bottom:3px}
-.endurance-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
-.endurance-subhead{font-size:17px;margin:18px 0 7px}
-.routine-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}.routine-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px;min-width:0;box-shadow:var(--shadow)}.routine-card.done-today{border-left:4px solid var(--green)}.routine-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap}.routine-title{font-size:16px;font-weight:800;overflow-wrap:anywhere;flex:1;min-width:140px}.routine-status{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:750;background:var(--blue2);color:var(--blue)}.routine-status.done{background:var(--green-bg);color:var(--green)}.routine-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.routine-history{margin-top:8px;color:var(--muted);font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere}.routine-done-btn{min-width:190px}.routine-countdown-row{flex:0 0 100%;width:100%}.routine-countdown-btn{min-width:150px}.routine-countdown-btn:disabled{opacity:.8}.manifestation-time{font-size:12px;color:var(--muted);margin:-2px 0 8px;overflow-wrap:anywhere}.manifestation-status.waiting{background:var(--amber-bg);color:var(--amber)}
-@media(max-width:560px){.endurance-times{grid-template-columns:1fr}.endurance-card,.routine-card{padding:11px}.routine-done-btn{width:100%}}
+/* =========================================================
+   基本
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+
+    background: #111;
+    color: white;
+
+    font-family:
+        "Microsoft JhengHei",
+        "Noto Sans TC",
+        Arial,
+        sans-serif;
+}
 
 
-/* 行動流程圖與 Checklist 子任務 */
-.flow-add-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.flow-add-control{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);min-width:0}
-.flow-add-control label,.flow-position-row label{font-size:12px;color:var(--muted);font-weight:800}
-.flow-add-control select,.flow-position-row select,.flow-search{width:100%;min-width:0;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px}.flow-add-control label:not(:first-child){margin-top:3px}.flow-checklist-actions{display:flex;gap:7px;flex-wrap:wrap}.flow-checklist-actions button{flex:1;min-width:130px}.flow-node-actions .flow-complete{background:#23663f;color:#fff;border-color:#23663f}.flow-node-actions .flow-undo{color:var(--amber);border-color:var(--amber)}
-.flow-position-row{display:grid;grid-template-columns:auto minmax(180px,280px) minmax(0,1fr);align-items:center;gap:10px;margin-top:14px}
-.flow-chart{display:grid;justify-items:center;margin-top:18px;gap:0}
-.flow-empty{width:100%;padding:22px 14px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:10px}
-.flow-node{width:min(100%,760px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--blue);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);min-width:0}
-.flow-node.is-done{border-color:var(--green);background:var(--green-bg)}
-.flow-node-main{min-width:0;overflow-wrap:anywhere}
-.flow-node-step{font-size:11px;font-weight:800;color:var(--muted);margin-bottom:2px}
-.flow-node-title{font-weight:850;font-size:16px;overflow-wrap:anywhere}.flow-node-done-title{text-decoration:line-through;opacity:.78}
-.flow-node-meta{font-size:12px;color:var(--muted);margin-top:3px;overflow-wrap:anywhere}
-.flow-node-actions{display:flex;align-items:center;gap:5px;flex-wrap:wrap;justify-content:flex-end}
-.flow-node-actions button{font-size:12px;padding:6px 8px}
-.flow-manifestation-create{padding:12px;margin-bottom:14px;background:var(--blue2);border:1px solid var(--line);border-radius:10px}
-.flow-manifestation-heading{font-weight:850;font-size:17px;margin-bottom:10px}
-.flow-manifestation-create .goal-overview{margin:10px 0 0}
-.flow-node-details{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
-.flow-node-details .field input,.flow-node-details .field textarea{width:100%;min-width:0;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px}
-.flow-node-details .field textarea{min-height:62px;resize:vertical}
-.flow-countdown-btn{background:var(--blue2);color:var(--blue);border-color:var(--blue)}
-.flow-countdown-btn.is-counting{background:var(--amber-bg);color:var(--amber);border-color:var(--amber)}
-@media(max-width:800px){.flow-node-details{grid-template-columns:1fr}}
-.flow-arrow{font-size:25px;line-height:1;padding:7px 0;color:var(--blue);font-weight:900}
-.goal-li{flex-wrap:wrap}
-.subtask-details{flex:0 0 100%;width:100%;margin:4px 0 4px 27px;border:1px solid var(--line);border-radius:9px;background:var(--bg);overflow:hidden}
-.subtask-details summary{cursor:pointer;padding:8px 10px;font-size:12px;font-weight:800;color:var(--muted);list-style:none}
-.subtask-details summary::-webkit-details-marker{display:none}
-.subtask-details summary:before{content:'▸';margin-right:7px}
-.subtask-details[open] summary:before{content:'▾'}
-.subtask-content{padding:0 10px 10px}
-.subtask-list{list-style:none;margin:0;padding:0;display:grid;gap:4px}
-.subtask-li{display:flex;align-items:flex-start;gap:7px;padding:5px 3px;min-width:0}
-.subtask-li label{display:flex;align-items:flex-start;gap:7px;flex:1;min-width:0;cursor:pointer}
-.subtask-li input{width:16px;height:16px;margin:3px 0 0;flex-shrink:0;accent-color:var(--green)}
-.subtask-li.done .subtask-title{text-decoration:line-through;color:var(--muted);opacity:.8}
-.subtask-title{overflow-wrap:anywhere;flex:1;min-width:0;font-size:13px}
-.subtask-actions{display:flex;gap:4px;flex-wrap:wrap}
-.subtask-actions button{font-size:11px;padding:3px 6px}
-.add-subtask-form{display:flex;gap:7px;margin-top:9px;padding-top:9px;border-top:1px solid var(--line)}
-.add-subtask-form input{flex:1;min-width:0;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 9px}
-.subtask-note{font-size:11px;color:var(--muted);margin:5px 0 8px}
-@media(max-width:800px){.flow-add-grid{grid-template-columns:1fr}.flow-position-row{grid-template-columns:1fr}.flow-node{grid-template-columns:minmax(0,1fr)}.flow-node-actions{justify-content:flex-start}.subtask-details{margin-left:0}}
+/* =========================================================
+   主畫面
+   ========================================================= */
+
+body {
+
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+
+.container {
+
+    width: 100%;
+    max-width: 700px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   標題
+   ========================================================= */
+
+h1 {
+
+    font-size: 42px;
+
+    margin: 0 0 8px 0;
+}
+
+
+.subtitle {
+
+    color: #999;
+
+    font-size: 20px;
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   次數選擇
+   ========================================================= */
+
+.settings {
+
+    background: #1d1d1d;
+
+    border-radius: 15px;
+
+    padding: 18px;
+
+    margin-bottom: 25px;
+}
+
+
+label {
+
+    font-size: 21px;
+}
+
+
+select {
+
+    margin-left: 10px;
+
+    font-size: 20px;
+
+    padding: 8px 15px;
+
+    border-radius: 8px;
+
+    border: none;
+}
+
+
+/* =========================================================
+   目前階段
+   ========================================================= */
+
+.phase {
+
+    min-height: 45px;
+
+    font-size: 32px;
+
+    color: #4ade80;
+
+    margin-top: 10px;
+}
+
+
+/* =========================================================
+   大型計時器
+   ========================================================= */
+
+.timer {
+
+    font-size: 120px;
+
+    font-weight: bold;
+
+    line-height: 1;
+
+    margin: 20px 0;
+}
+
+
+/* =========================================================
+   第幾下
+   ========================================================= */
+
+.rep {
+
+    font-size: 38px;
+
+    margin-bottom: 18px;
+}
+
+
+.rep span {
+
+    color: #4ade80;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   節奏
+   ========================================================= */
+
+.tempo {
+
+    font-size: 25px;
+
+    color: #aaa;
+
+    margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   按鈕
+   ========================================================= */
+
+.buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+
+button {
+
+    min-width: 140px;
+
+    font-size: 21px;
+
+    padding: 15px 25px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    background: #333;
+
+    color: white;
+
+    touch-action: manipulation;
+}
+
+
+button:hover {
+
+    background: #444;
+}
+
+
+.start {
+
+    background: #22c55e;
+
+    color: #000;
+
+    font-weight: bold;
+}
+
+
+.start:hover {
+
+    background: #16a34a;
+}
+
+
+.pause {
+
+    background: #f59e0b;
+
+    color: #000;
+
+    font-weight: bold;
+}
+
+
+.pause:hover {
+
+    background: #d97706;
+}
+
+
+.reset {
+
+    background: #dc2626;
+}
+
+
+.reset:hover {
+
+    background: #b91c1c;
+}
+
+
+/* =========================================================
+   狀態
+   ========================================================= */
+
+.status {
+
+    margin-top: 25px;
+
+    font-size: 18px;
+
+    color: #888;
+
+    min-height: 28px;
+}
+
+
+.finished {
+
+    color: #4ade80 !important;
+
+    font-size: 36px;
+}
+
+
+/* =========================================================
+   手機版
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+
+        padding: 15px;
+    }
+
+
+    h1 {
+
+        font-size: 32px;
+    }
+
+
+    .subtitle {
+
+        font-size: 17px;
+
+        margin-bottom: 20px;
+    }
+
+
+    .phase {
+
+        font-size: 27px;
+    }
+
+
+    .timer {
+
+        font-size: 90px;
+
+        margin: 18px 0;
+    }
+
+
+    .rep {
+
+        font-size: 30px;
+    }
+
+
+    .tempo {
+
+        font-size: 21px;
+    }
+
+
+    .buttons {
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        width: 100%;
+    }
+
+
+    button {
+
+        width: 100%;
+
+        min-width: 0;
+
+        padding: 16px 10px;
+
+        font-size: 20px;
+    }
+
+
+    .start {
+
+        grid-column: span 2;
+    }
+
+}
+
+
+/* =========================================================
+   更小手機
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .timer {
+
+        font-size: 75px;
+    }
+
+
+    h1 {
+
+        font-size: 28px;
+    }
+
+}
 
 </style>
+
 </head>
+
+
 <body>
-<div class="page">
-  <header class="head"><div><h1>帶著恐懼前進｜心想事成、Routine 與目標清單</h1><div class="sub">不需要等到阻力消失才行動。把今天想做的事加入流程圖；選擇任何節點的「5 秒倒數」後開始行動，心想事成會記錄開始時間，完工後再記錄成果與感受。</div><div class="rule">原則：只記錄事實，不評價人格。先輸入今天「踏出什麼」並加入流程圖，再按該節點「5 秒倒數」；倒數後心想事成記錄開始時間，完工後紀錄移至下方且不自動跳頁。</div></div></header>
-  <section class="score-panel" aria-label="人生分數"><div class="score-top"><div><div class="score-label">🌱 人生分數</div><div class="score-number" id="lifeScoreDisplay">0</div></div><div style="flex:1;min-width:190px"><div style="font-weight:750">人生分數上限 100</div><div class="score-caption">初始分數 0。Checklist 每勾選完成一項 +1 分；心想事成每完工 +0.0005 分。分數最高 100，達上限後仍會保存完成紀錄。</div></div></div><div class="score-controls"><label for="scoreDelta" class="score-label">調整分數</label><input id="scoreDelta" type="number" step="1" value="1" aria-label="調整分數的數值"><button id="scoreAddBtn" class="primary" type="button">＋ 加分</button><button id="scoreSubtractBtn" class="danger" type="button">－ 扣分</button><label for="scoreSetValue" class="score-label">直接設定（0–100）</label><input id="scoreSetValue" type="number" min="0" max="100" step="0.0001" value="0" aria-label="直接設定人生分數"><button id="scoreSetBtn" type="button">設定分數</button></div><div class="score-caption" id="scoreLastChange">初始人生分數為 0；所有分數會自動儲存於這台裝置。</div></section>
-  <div class="toolbar"><button id="exportBackupBtn" type="button">下載完整備份</button><button id="importBackupBtn" type="button">匯入備份</button><button id="exportCsvBtn" type="button">匯出心想事成紀錄 CSV</button><input type="file" id="backupFile" accept=".json,application/json" class="hidden"></div>
-  <div id="notice" class="notice" role="status" aria-live="polite"></div>
 
-  <section class="section" id="flowSection">
-    <div class="section-head"><div><h2>🧭 排序清單｜行動流程圖</h2><div class="section-desc">每天在「心想事成」輸入今天要踏出的一小步，再直接加入流程圖，不需要搜尋。Routine 與 Checklist 仍可搜尋／逐層選取。流程圖每個項目都有 5 秒語音倒數、完工、調整順序與移除功能；完成狀態同步更新原清單並依原規則計分。</div></div></div>
-    <div class="panel">
-      <div class="flow-manifestation-create">
-        <div class="flow-manifestation-heading">✨ 心想事成｜今天決定踏出什麼？</div>
-        <form id="newManifestationForm" class="form-grid"><div class="field"><label for="newManifestationTitle">踏出什麼</label><input id="newManifestationTitle" maxlength="250" placeholder="例如：打開文件工作 5 分鐘、主動開口打招呼" required></div><button class="primary" type="submit">＋ 加入流程圖</button></form>
-        <div class="goal-overview"><span>進行中：<strong id="activeGoalCount">0</strong></span><span>已完工：<strong id="completedGoalCount">0</strong></span></div>
-      </div>
-      <div class="flow-add-grid">
-        <div class="flow-add-control">
-          <label for="flowRoutineSearch">搜尋每天要做｜Routine</label><input id="flowRoutineSearch" class="flow-search" type="search" placeholder="輸入關鍵字…">
-          <label for="flowRoutineSelect">選擇每日項目</label><select id="flowRoutineSelect"><option value="">選擇每日 Routine…</option></select>
-          <button type="button" data-flow-add="routine" class="primary">＋ 加入流程圖</button>
-        </div>
-        <div class="flow-add-control flow-checklist-control">
-          <label for="flowChecklistSearch">快速搜尋 Checklist／子任務</label><input id="flowChecklistSearch" class="flow-search" type="search" placeholder="例如：興趣愛好才華、畫畫、買畫筆…">
-          <label for="flowChecklistFolder">第一層｜分類／母目錄</label><select id="flowChecklistFolder"><option value="">先選擇分類…</option></select>
-          <label for="flowChecklistGoal">第二層｜主目標</label><select id="flowChecklistGoal" disabled><option value="">先選擇分類…</option></select>
-          <label for="flowChecklistSubtask">第三層｜子任務（可選）</label><select id="flowChecklistSubtask" disabled><option value="">先選主目標…</option></select>
-          <div class="flow-checklist-actions"><button type="button" data-flow-add="checklist-goal" class="primary" id="flowAddChecklistGoal" disabled>＋ 加入主目標</button><button type="button" data-flow-add="checklist-subtask" id="flowAddChecklistSubtask" disabled>＋ 加入選定子任務</button></div>
-          <div class="section-desc">例如：選「興趣愛好才華」→「畫畫」→「買畫筆」。主目標與子任務可分別加入流程圖。</div>
-        </div>
-      </div>
-      <div class="flow-position-row"><label for="flowInsertPosition">新項目插入位置</label><select id="flowInsertPosition"><option value="end">最後一步之後</option></select><span class="section-desc">選擇「第 2 步之前」即可將新項目插入第二步前。</span></div>
-      <div id="flowChart" class="flow-chart" aria-live="polite"></div>
+
+<div class="container">
+
+
+    <!-- =====================================================
+         標題
+         ===================================================== -->
+
+    <h1>
+        4-0-2 訓練計時器
+    </h1>
+
+
+    <div class="subtitle">
+        4 秒下降 → 0 秒 → 2 秒上升
     </div>
-  </section>
 
-  <section class="section" id="routineSection">
-    <div class="section-head"><div><h2>🔁 Routine｜每天要做</h2><div class="section-desc">每天完成每個項目最多一次。開始前可按「5 秒倒數」，語音倒數 5、4、3、2、1 後開始執行；完成後按「完成今日 Routine」記錄並加最多 +0.0005 分。日期以台灣時間計算，歷史完成紀錄會保留；分數仍受 100 分上限限制。</div></div></div>
-    <div class="panel">
-      <form id="routineForm" class="form-grid"><div class="field"><label for="newRoutineTitle">新增每日 Routine</label><input id="newRoutineTitle" maxlength="250" placeholder="例如：閱讀 10 頁、整理桌面" required></div><button class="primary" type="submit">＋ 新增 Routine</button></form>
-      <div class="goal-overview"><span>Routine 項目：<strong id="routineTotalCount">0</strong></span><span>今日完成：<strong id="routineTodayCount">0 / 0</strong></span><span>今日得分：<strong id="routineTodayScore">0</strong></span><span>台灣日期：<strong id="routineTaiwanDate">—</strong></span></div>
-      <div id="routineItems" class="routine-grid"></div>
-      <div id="routineEmpty" class="empty-state">尚未建立每日 Routine。預設項目載入後會顯示在這裡。</div>
+
+
+    <!-- =====================================================
+         次數
+         ===================================================== -->
+
+    <div class="settings">
+
+        <label for="repSelect">
+            總次數：
+        </label>
+
+        <select id="repSelect">
+
+            <option value="1">1 下</option>
+
+            <option value="2">2 下</option>
+
+            <option value="3">3 下</option>
+
+            <option value="4">4 下</option>
+
+            <option value="5">5 下</option>
+
+            <option value="6">6 下</option>
+
+            <option value="7">7 下</option>
+
+            <option value="8">8 下</option>
+
+            <option value="9">9 下</option>
+
+            <option value="10" selected>
+                10 下
+            </option>
+
+        </select>
+
     </div>
-  </section>
 
-  <section class="section" id="enduranceSection">
-    <div class="section-head"><div><h2>🧘 忍耐清單</h2><div class="section-desc">輸入想記錄的忍耐項目，按「開始」會自動記錄開始日期與時間；按「結束」會記錄結束日期與時間。結束後保留在歷史紀錄，也可再次開始一輪。</div></div></div>
-    <div class="panel">
-      <form id="enduranceForm" class="form-grid"><div class="field"><label for="newEnduranceTitle">新增忍耐項目</label><input id="newEnduranceTitle" maxlength="250" placeholder="例如：忍住不滑手機、延後衝動、持續專注" required></div><button class="primary" type="submit">＋ 新增項目</button></form>
-      <div class="goal-overview"><span>尚未開始：<strong id="pendingEnduranceCount">0</strong></span><span>忍耐中：<strong id="activeEnduranceCount">0</strong></span><span>已結束紀錄：<strong id="endedEnduranceCount">0</strong></span></div>
-      <div id="activeEnduranceItems" class="endurance-grid"></div><div id="activeEnduranceEmpty" class="empty-state">目前沒有尚未開始或正在忍耐的項目。新增一個項目後，按「開始」記錄時間。</div>
-      <h3 class="endurance-subhead">📚 已結束的忍耐紀錄</h3>
-      <div id="endedEnduranceItems" class="endurance-grid"></div><div id="endedEnduranceEmpty" class="empty-state">尚無已結束的忍耐紀錄。按「結束」後，項目會保留在這裡。</div>
+
+
+    <!-- =====================================================
+         Phase
+         ===================================================== -->
+
+    <div id="phase" class="phase">
+
+        準備開始
+
     </div>
-  </section>
 
-  <section class="section" id="goalsSection">
-    <div class="section-head"><div><h2>✅ 目標 Checklist</h2><div class="section-desc">每個主目標都可展開子任務清單；子任務可新增、改名、勾選與刪除，但不加分。只有主目標完成才依原規則加 1 分。</div></div><div class="toolbar" style="margin:0"><button id="expandGoalsBtn" type="button">全部展開</button><button id="collapseGoalsBtn" type="button">全部收合</button></div></div>
-    <div class="panel"><form id="folderCreateForm" class="folder-create"><input id="newFolderName" maxlength="100" placeholder="新增母目錄，例如：要學、要買、旅行" aria-label="新的母目錄名稱" required><button class="primary" type="submit">＋ 新增母目錄</button></form><div class="goal-overview"><span>Checklist 已完成 <strong id="goalsDoneText">0 / 0</strong></span><input id="goalSearch" class="filter-input" type="search" placeholder="搜尋書名或目標…" aria-label="搜尋目標清單"></div><div id="goalFolders" class="goal-grid"></div></div>
-  </section>
 
-  <section class="section" id="completedArchiveSection">
-    <div class="section-head"><div><h2>🏁 已完工的心想事成｜紀錄區</h2><div class="section-desc">心想事成完工後會保留在這裡，並記錄開始時間、完工時間、完成內容與感受。可搜尋歷史紀錄；每日新增事項請在上方排序清單直接輸入。</div></div></div>
-    <div class="goal-overview"><span>符合搜尋的紀錄：<strong id="completedSearchCount">0</strong></span><input id="completedSearch" class="filter-input" type="search" placeholder="搜尋已完工的心想事成…" aria-label="用關鍵字搜尋已完工的心想事成"></div>
-    <div id="completedManifestations" class="manifestation-grid"></div><div id="completedManifestationsEmpty" class="empty-state">尚無完工紀錄。完成一個心想事成後，它會出現在這裡。</div>
-  </section>
-  <div class="footer-note"><strong>計分與資料保存：</strong>人生分數介於 0–100；Checklist 主目標新勾選完成時 +1 分，取消勾選會撤回該主目標已入帳分數；子任務完成僅記錄進度、不加分；心想事成完工 +0.0005 分；心想事成加入流程圖後，按該節點的「5 秒倒數」才語音倒數 5、4、3、2、1 並記錄開始時間；按完工時記錄完工時間並移至頁面底部，不自動捲動頁面。刪除已完工的心想事成時，會撤回該筆實際入帳的分數。已達 100 分後仍會保存完成紀錄，但分數不再增加。舊版資料會保留，但舊分數歸零，舊版已勾選項目不回溯加分。心想事成（在排序清單中每日新增）、Routine 每日完成歷史、忍耐清單（含開始／結束時間）、人生分數、排序流程圖、Checklist 主目標與子任務會自動儲存在目前瀏覽器／裝置的本機儲存空間。請定期下載完整備份；清除瀏覽器資料、改用不同瀏覽器或不同裝置時，資料不一定會同步。匯入備份會取代目前的心想事成、人生分數、流程圖及 Checklist，匯入前建議先下載備份。此版本已移除所有番茄鐘、計時器、鬧鈴及拆解步驟功能；新增 Routine，排序流程圖中的心想事成、Routine、Checklist 主目標與子任務均可先按「5 秒倒數」並以語音倒數 5、4、3、2、1；Routine 也保留原本每日清單上的倒數按鈕，開始執行後再按「完成今日 Routine」；每個項目每天最多完成一次並加最多 0.0005 分，另保留忍耐清單每一輪的開始與結束日期時間。</div>
+
+    <!-- =====================================================
+         Timer
+         ===================================================== -->
+
+    <div id="timer" class="timer">
+
+        4.0
+
+    </div>
+
+
+
+    <!-- =====================================================
+         Rep
+         ===================================================== -->
+
+    <div class="rep">
+
+        第
+        <span id="repNumber">1</span>
+        下
+
+    </div>
+
+
+
+    <!-- =====================================================
+         節奏
+         ===================================================== -->
+
+    <div class="tempo">
+
+        4 - 0 - 2
+
+    </div>
+
+
+
+    <!-- =====================================================
+         按鈕
+         ===================================================== -->
+
+    <div class="buttons">
+
+
+        <button
+            id="startBtn"
+            class="start">
+
+            開始
+
+        </button>
+
+
+        <button
+            id="pauseBtn"
+            class="pause">
+
+            暫停
+
+        </button>
+
+
+        <button
+            id="resetBtn"
+            class="reset">
+
+            重設
+
+        </button>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         狀態
+         ===================================================== -->
+
+    <div id="status" class="status">
+
+        每一個 4-0-2 = 1 下
+
+    </div>
+
+
 </div>
-<div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><h2 id="modalTitle">確認操作</h2><p id="modalText"></p><div class="modal-actions"><button id="modalCancel" type="button">取消</button><button id="modalConfirm" class="danger" type="button">確定</button></div></div></div>
+
+
+
 <script>
-'use strict';
-const STORAGE_KEY='fear-forward-goals-no-timer-v2';
-const LEGACY_KEYS=['fear-forward-goals-no-timer-v1','fear-forward-pomodoro-v3','fear-forward-pomodoro-v2','fear-timer-v1'];
-const SCORE_MAX=100;
-const MANIFESTATION_SCORE=0.0005;
-const ROUTINE_SCORE=0.0005;
-const DEFAULT_ROUTINE_TITLES=['刷牙／牙線','超慢跑兩小時'];
-const SCORE_PRECISION=4;
-const FEAR_OPTIONS=['有性慾','食慾','不想做','網癮','害怕失敗','焦慮／恐懼','疲倦','無聊','分心','完美主義','其他'];
-const DEFAULT_FOLDER_DATA = [
-  {id:'default-read',name:'要看',items:[
-    'FBI談判協商術','人性的弱點','心理摩擦力','籌資提案教父的破億成交術','影響力','人性的法則','影響力的八大障礙','Models最終自然口語版','SPIN銷售巨人','上癮','女人沒說的才是重點','女性測試男性時想要什麼','先發影響力','好好先生','如何改變一個人','如何讓人喜歡我','如何讓你愛的人愛上你','權力的48法則','你能寫出好故事','改變別人想法','依附','非暴力溝通','哈佛法學院的情緒談判課','哈佛談判力','洗腦術','說服他人的50個秘密','說服的藝術','誰說人是理性的','逆向戀愛術','高難度談話','慾望演化','創意黏力學','超級溝通者','銷售中的心理學','陽剛與陰柔','催化','遊戲','遊戲加速','達爾誘惑和說服戰術','影響力的障礙','鋪梗力','親密關係','駭進人心','關係免疫力','關係花園','關鍵對話','騙局','女人其實都想要','小惡魔教你極致性愛','引爆G點','宋美玄女醫師教你高潮迭起的性愛','完美伴侶','麻美姐姐教你：手放這裡女人會很想要','極致愛撫2','幸福的婚姻','如何正確吵架','抱緊我','愛的八次約會'
-  ]},
-  {id:'default-heart',name:'心跳',items:['90','80','70','60']},
-  {id:'default-internet',name:'禁網',items:['21天','66天','180天','365天']},
-  {id:'default-hobbies',name:'興趣愛好才華',items:['畫畫','料理/飲品','登山/自行車','居家修繕']},
-  {id:'default-topics',name:'500話題',items:['100','200','300','400','500']},
-  {id:'default-size',name:'GG15',items:['10.5cm','11cm','11.5cm','12cm','12.5cm','13cm','13.5cm','14cm','14.5cm','15cm']},
-  {id:'default-abs',name:'六塊肌',items:['90cm','六塊肌']},
-  {id:'default-shoulders',name:'肩寬60cm',items:['49','50','51','52','53','54','55','56','57','58','59','60']}
-].map(folder=>({...folder,items:folder.items.map((title,i)=>({id:folder.id+'-item-'+(i+1),title,done:false,scoreAwardedAmount:0,subTasks:[]}))}));
-const defaultReadFolder=DEFAULT_FOLDER_DATA.find(f=>f.name==='要看');
-if(defaultReadFolder){const originalBooks=defaultReadFolder.items.map((item,index)=>({id:'default-pua-book-'+(index+1),title:item.title,done:false,createdAt:Date.now()}));defaultReadFolder.items=[{id:'default-read-item-pua',title:'PUA',done:false,scoreAwardedAmount:0,subTasks:originalBooks}];}
-function cloneDefaultFolders(){return DEFAULT_FOLDER_DATA.map(f=>({...f,items:f.items.map(i=>({...i,subTasks:(i.subTasks||[]).map(st=>({...st}))}))}));}
-let lifeScore=0;
-let scoreLog=[];
-let manifestationGoals=[];
-let goalFolders=[];
-let enduranceItems=[];
-let routineItems=[];
-let flowSequence=[];
-let modalCallback=null;
-let noticeTimer=null;
-const $=id=>document.getElementById(id);
-const makeId=()=>window.crypto&&crypto.randomUUID?crypto.randomUUID():'id-'+Date.now()+'-'+Math.random().toString(16).slice(2);
-const safeString=v=>typeof v==='string'?v:(v==null?'':String(v));
-function htmlEscape(s){return safeString(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function showNotice(t){const e=$('notice');e.textContent=t;e.classList.add('show');if(noticeTimer)clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>e.classList.remove('show'),6500);}
-function todayLocalDate(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
-function fmtDateTime(ms){if(!ms)return '—';const d=new Date(ms);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;}
-function normaliseSubTasks(data){if(!Array.isArray(data))return [];return data.map(st=>({id:safeString(st&&st.id)||makeId(),title:safeString(st&&st.title).trim(),done:!!(st&&st.done),createdAt:Number(st&&st.createdAt)||Date.now()})).filter(st=>st.title);}
-function normaliseFolders(data){
-  if(!Array.isArray(data))return cloneDefaultFolders();
-  const folders=data.map(f=>({id:safeString(f&&f.id)||makeId(),name:safeString(f&&f.name).trim()||'未命名母目錄',items:Array.isArray(f&&f.items)?f.items.map(i=>({id:safeString(i&&i.id)||makeId(),title:safeString(i&&i.title).trim(),done:!!(i&&i.done),scoreAwardedAmount:Number.isFinite(Number(i&&i.scoreAwardedAmount))?Math.max(0,roundScore(Number(i.scoreAwardedAmount))):0,subTasks:normaliseSubTasks(i&&i.subTasks)})).filter(i=>i.title):[]}));
-  // 舊版「要看」中的書籍移入新建的 PUA 子任務清單；舊有勾選狀態保留，歷史人生分數不回溯改動。
-  const readFolder=folders.find(f=>f.name==='要看'||f.id==='default-read');
-  if(readFolder&&!readFolder.items.some(i=>i.title.trim().toLocaleLowerCase()==='pua')){
-    const oldItems=readFolder.items.slice();
-    readFolder.items=[{id:makeId(),title:'PUA',done:false,scoreAwardedAmount:0,subTasks:oldItems.map(i=>({id:makeId(),title:i.title,done:!!i.done,createdAt:Date.now()}))}];
-  }
-  return folders;
-}
-function normaliseManifestations(data){if(!Array.isArray(data))return [];return data.map(g=>({id:safeString(g&&g.id)||makeId(),title:safeString(g&&g.title).trim()||'未命名目標',fears:Array.isArray(g&&g.fears)?g.fears.filter(x=>FEAR_OPTIONS.includes(x)):[],toDo:safeString(g&&g.toDo),actual:safeString(g&&g.actual),feeling:safeString(g&&g.feeling),startedAt:Number(g&&g.startedAt)||null,completed:!!(g&&g.completed),completedAt:Number(g&&g.completedAt)||null,scoreAwardedAmount:Number.isFinite(Number(g&&g.scoreAwardedAmount))?Math.max(0,roundScore(Number(g&&g.scoreAwardedAmount))):(g&&g.scoreAwarded?1:0),createdAt:Number(g&&g.createdAt)||Date.now()}));}
-function normaliseEnduranceItems(data){if(!Array.isArray(data))return [];return data.map(x=>({id:safeString(x&&x.id)||makeId(),title:safeString(x&&x.title).trim()||'未命名忍耐項目',createdAt:Number(x&&x.createdAt)||Date.now(),startedAt:Number(x&&x.startedAt)||null,endedAt:Number(x&&x.endedAt)||null}));}
-function taiwanDate(){const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const part=k=>parts.find(p=>p.type===k)?.value||'';return `${part('year')}-${part('month')}-${part('day')}`;}
-function defaultRoutineItems(){return DEFAULT_ROUTINE_TITLES.map(title=>({id:makeId(),title,createdAt:Date.now(),completions:[]}));}
-function normaliseRoutineItems(data){if(!Array.isArray(data))return defaultRoutineItems();return data.map(x=>({id:safeString(x&&x.id)||makeId(),title:safeString(x&&x.title).trim()||'未命名 Routine',createdAt:Number(x&&x.createdAt)||Date.now(),completions:Array.isArray(x&&x.completions)?x.completions.map(c=>({date:/^\d{4}-\d{2}-\d{2}$/.test(safeString(c&&c.date))?c.date:'',at:Number(c&&c.at)||Date.now(),scoreAwardedAmount:Number.isFinite(Number(c&&c.scoreAwardedAmount))?Math.max(0,roundScore(Number(c.scoreAwardedAmount))):0})).filter(c=>c.date):[]}));}
-function cloneRoutineItems(data){return data.map(x=>({...x,completions:(x.completions||[]).map(c=>({...c}))}));}
-function routineTodayCompletion(item,date=taiwanDate()){return (item.completions||[]).find(c=>c.date===date)||null;}
-function normaliseFlowSequence(data){if(!Array.isArray(data))return [];return data.map(x=>({id:safeString(x&&x.id)||makeId(),key:safeString(x&&x.key),titleSnapshot:safeString(x&&x.titleSnapshot),groupSnapshot:safeString(x&&x.groupSnapshot),addedAt:Number(x&&x.addedAt)||Date.now()})).filter(x=>x.key);}
-function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify({version:8,lifeScore,scoreLog,manifestationGoals,goalFolders,enduranceItems,routineItems,flowSequence}));}catch(e){showNotice('瀏覽器無法儲存資料；請立即下載完整備份。');}}
-function load(){
-  let data=null,isCurrent=false;
-  try{const current=localStorage.getItem(STORAGE_KEY);if(current){data=JSON.parse(current);isCurrent=true;}else{for(const k of LEGACY_KEYS){const raw=localStorage.getItem(k);if(raw){data=JSON.parse(raw);break;}}}}catch(e){data=null;isCurrent=false;}
-  if(data&&typeof data==='object'&&!Array.isArray(data)){
-    manifestationGoals=normaliseManifestations(data.manifestationGoals);
-    goalFolders=Array.isArray(data.goalFolders)?normaliseFolders(data.goalFolders):cloneDefaultFolders();
-    enduranceItems=normaliseEnduranceItems(data.enduranceItems);
-    routineItems=Array.isArray(data.routineItems)?normaliseRoutineItems(data.routineItems):defaultRoutineItems();
-    flowSequence=normaliseFlowSequence(data.flowSequence);
-    // 只在 v7 與更早版本遷移舊的進行中心想事成；新版手動移除的流程節點不會在重新開啟時自動加回。
-    if(Number(data.version||0)<8){
-      manifestationGoals.filter(g=>!g.completed).forEach(g=>{
-        const key=`m::${g.id}`;
-        if(!flowSequence.some(entry=>entry.key===key))flowSequence.push({id:makeId(),key,titleSnapshot:g.title,groupSnapshot:'心想事成',addedAt:Date.now()});
-      });
+
+/* =========================================================
+   4-0-2 訓練計時器
+   =========================================================
+
+   每一下：
+
+   語音「一、四」
+       ↓
+   4 秒下降
+       ↓
+   0 秒
+       ↓
+   語音「二」
+       ↓
+   2 秒上升
+       ↓
+   完成第 1 下
+
+
+   下一下：
+
+   語音「二、四」
+       ↓
+   4 秒
+       ↓
+   0 秒
+       ↓
+   語音「二」
+       ↓
+   2 秒
+
+
+   最後：
+
+   語音「十、四」
+       ↓
+   4 秒
+       ↓
+   語音「二」
+       ↓
+   2 秒
+
+
+   重點：
+
+   0 秒完全沒有語音。
+
+   ========================================================= */
+
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
+const phaseElement =
+    document.getElementById("phase");
+
+const timerElement =
+    document.getElementById("timer");
+
+const repNumberElement =
+    document.getElementById("repNumber");
+
+const statusElement =
+    document.getElementById("status");
+
+const repSelect =
+    document.getElementById("repSelect");
+
+const startBtn =
+    document.getElementById("startBtn");
+
+const pauseBtn =
+    document.getElementById("pauseBtn");
+
+const resetBtn =
+    document.getElementById("resetBtn");
+
+
+/* =========================================================
+   中文數字
+   ========================================================= */
+
+const chineseNumbers = [
+
+    "",
+
+    "一",
+
+    "二",
+
+    "三",
+
+    "四",
+
+    "五",
+
+    "六",
+
+    "七",
+
+    "八",
+
+    "九",
+
+    "十"
+
+];
+
+
+/* =========================================================
+   訓練狀態
+   ========================================================= */
+
+let currentRep = 1;
+
+let currentPhase = "down";
+
+let running = false;
+
+let paused = false;
+
+
+/* =========================================================
+   Timer
+   ========================================================= */
+
+let phaseStartTime = 0;
+
+let phaseDuration = 4000;
+
+let pausedRemaining = 4000;
+
+let animationFrame = null;
+
+
+/* =========================================================
+   手機螢幕保持亮著
+   ========================================================= */
+
+let wakeLock = null;
+
+
+/*
+   嘗試鎖定螢幕喚醒。
+
+   部分手機瀏覽器支援。
+   不支援時不會影響程式。
+*/
+
+async function requestWakeLock() {
+
+    try {
+
+        if (
+            "wakeLock" in navigator
+        ) {
+
+            wakeLock =
+                await navigator.wakeLock.request(
+                    "screen"
+                );
+
+        }
+
     }
-    if(isCurrent){lifeScore=clampScore(Number.isFinite(Number(data.lifeScore))?Number(data.lifeScore):0);scoreLog=Array.isArray(data.scoreLog)?data.scoreLog:[];}
-    else{lifeScore=0;scoreLog=[];manifestationGoals.forEach(g=>g.scoreAwardedAmount=0);goalFolders.forEach(f=>f.items.forEach(i=>i.scoreAwardedAmount=0));}
-  }else{lifeScore=0;scoreLog=[];manifestationGoals=[];goalFolders=cloneDefaultFolders();enduranceItems=[];routineItems=defaultRoutineItems();flowSequence=[];}
-  save();}
-function roundScore(n){return Math.round((Number(n)+Number.EPSILON)*Math.pow(10,SCORE_PRECISION))/Math.pow(10,SCORE_PRECISION);}
-function clampScore(n){return Math.min(SCORE_MAX,Math.max(0,roundScore(n)));}
-function formatScore(n){return String(roundScore(n));}
-function adjustScore(amount,reason){if(!Number.isFinite(amount)||!Number.isInteger(amount)){showNotice('手動加減分請輸入整數。');return 0;}const before=lifeScore;const after=clampScore(before+amount);const actual=roundScore(after-before);lifeScore=after;scoreLog.unshift({id:makeId(),amount:actual,requestedAmount:amount,reason,at:Date.now(),scoreAfter:lifeScore});save();renderScore();showNotice(actual!==amount?`${reason}：實際調整 ${actual>0?'+':''}${formatScore(actual)} 分；人生分數範圍為 0–100，目前 ${formatScore(lifeScore)} 分。`:`${reason}：${actual>0?'+':''}${formatScore(actual)} 分，目前人生分數 ${formatScore(lifeScore)}。`);return actual;}
-function applyScoreDelta(requested,reason){const before=lifeScore;const after=clampScore(before+requested);const actual=roundScore(after-before);lifeScore=after;scoreLog.unshift({id:makeId(),amount:actual,requestedAmount:requested,reason,at:Date.now(),scoreAfter:lifeScore});save();return actual;}
-function renderScore(){$('lifeScoreDisplay').textContent=formatScore(lifeScore);$('scoreSetValue').value=formatScore(lifeScore);const last=scoreLog[0];$('scoreLastChange').textContent=last?`最近調整：${last.reason}（${last.amount>0?'+':''}${formatScore(last.amount)}）｜${fmtDateTime(last.at)}｜調整後 ${formatScore(last.scoreAfter)} 分`:'初始人生分數為 0；所有分數會自動儲存於這台裝置。';}
-const manifestationCountdowns=new Map();
-const routineCountdowns=new Map();
-const flowCountdowns=new Map();
-function setManifestationFormBusy(busy){const form=$('newManifestationForm');if(!form)return;form.querySelectorAll('input,button').forEach(el=>{el.disabled=busy;});}
-function addManifestation(title){
-  const t=safeString(title).trim();if(!t)return null;
-  if(manifestationCountdowns.size||routineCountdowns.size||flowCountdowns.size){showNotice('目前已有一個五秒倒數，請等倒數完成後再新增。');return null;}
-  const goal={id:makeId(),title:t,fears:[],toDo:'',actual:'',feeling:'',startedAt:null,completed:false,completedAt:null,scoreAwardedAmount:0,createdAt:Date.now()};
-  manifestationGoals.unshift(goal);
-  const key=`m::${goal.id}`;
-  const selected=$('flowInsertPosition')?.value||'end';
-  const insertAt=selected==='end'?flowSequence.length:Math.max(0,Math.min(flowSequence.length,Number.parseInt(selected,10)||0));
-  flowSequence.splice(insertAt,0,{id:makeId(),key,titleSnapshot:t,groupSnapshot:'心想事成',addedAt:Date.now()});
-  save();renderManifestations();refreshFlowUi();
-  showNotice(`已將「${t}」加入流程圖第 ${insertAt+1} 步。按該節點的「5 秒倒數」即可開始。`);
-  return goal;
+
+    catch (error) {
+
+        /*
+           不支援或被系統拒絕時，
+           不影響訓練。
+        */
+
+        console.log(
+            "Wake Lock unavailable"
+        );
+
+    }
+
 }
-function manifestationById(id){return manifestationGoals.find(g=>g.id===id);}
-function setManifestationField(id,field,value){const g=manifestationById(id);if(!g||g.completed)return;if(field==='title'){const v=safeString(value);if(v.trim())g.title=v;}else if(['toDo','actual','feeling'].includes(field))g[field]=safeString(value);save();}
-function setFear(id,fear,checked){const g=manifestationById(id);if(!g||g.completed)return;g.fears=Array.isArray(g.fears)?g.fears:[];if(checked&&!g.fears.includes(fear))g.fears.push(fear);if(!checked)g.fears=g.fears.filter(x=>x!==fear);save();}
-function startManifestationCountdown(id){const g=manifestationById(id);if(!g||g.completed)return;if(manifestationCountdowns.size||routineCountdowns.size||flowCountdowns.size){showNotice('目前已有一個五秒倒數，請等倒數完成後再開始另一項。');return;}manifestationCountdowns.set(id,{number:5});setManifestationFormBusy(true);renderManifestations();const numbers=[{text:'五',display:'5'},{text:'四',display:'4'},{text:'三',display:'3'},{text:'二',display:'2'},{text:'一',display:'1'}];let index=0;let speechFailed=false;const finish=()=>{if(!manifestationCountdowns.has(id))return;manifestationCountdowns.delete(id);const target=manifestationById(id);if(target&&!target.completed){if(!target.startedAt)target.startedAt=Date.now();save();renderManifestations();showNotice(`「${target.title}」開始時間：${fmtDateTime(target.startedAt)}。`);}setManifestationFormBusy(false);};const fallbackStep=()=>{if(!manifestationCountdowns.has(id))return;if(index>=numbers.length){finish();return;}manifestationCountdowns.set(id,{number:Number(numbers[index].display)});renderManifestationCountdownStatus(id);index++;setTimeout(fallbackStep,1000);};const speakNext=()=>{if(!manifestationCountdowns.has(id))return;if(index>=numbers.length){finish();return;}manifestationCountdowns.set(id,{number:Number(numbers[index].display)});renderManifestationCountdownStatus(id);if(!('speechSynthesis' in window)||!('SpeechSynthesisUtterance' in window)||speechFailed){fallbackStep();return;}const utterance=new SpeechSynthesisUtterance(numbers[index].text);utterance.lang='zh-TW';utterance.rate=0.85;utterance.pitch=1;utterance.volume=1;const voices=window.speechSynthesis.getVoices();const voice=voices.find(v=>/^zh[-_]TW/i.test(v.lang))||voices.find(v=>/^zh/i.test(v.lang));if(voice)utterance.voice=voice;utterance.onend=()=>{if(!manifestationCountdowns.has(id))return;index++;setTimeout(speakNext,180);};utterance.onerror=()=>{if(!manifestationCountdowns.has(id))return;speechFailed=true;showNotice('瀏覽器語音播放未能完成，改用畫面倒數；倒數結束後仍會記錄開始時間。');index++;fallbackStep();};try{window.speechSynthesis.speak(utterance);}catch(err){speechFailed=true;index++;fallbackStep();}};if('speechSynthesis' in window){try{window.speechSynthesis.cancel();}catch(err){}}speakNext();}
-function renderManifestationCountdownStatus(id){refreshFlowUi();}
-function completeManifestation(id){const g=manifestationById(id);if(!g||g.completed)return;if(!safeString(g.title).trim()){showNotice('請先輸入「踏出什麼」的內容。');return;}g.title=g.title.trim();if(manifestationCountdowns.has(id)){showNotice('請等語音倒數完成並記錄開始時間後，再按完工。');return;}const oldX=window.scrollX,oldY=window.scrollY;g.completed=true;g.completedAt=Date.now();g.scoreAwardedAmount=applyScoreDelta(MANIFESTATION_SCORE,`心想事成完工：${g.title}`);save();renderAll();window.scrollTo(oldX,oldY);showNotice(`「${g.title}」已完工並移到頁面最下方紀錄，完工時間：${fmtDateTime(g.completedAt)}，人生分數 +${formatScore(g.scoreAwardedAmount)} 分${g.scoreAwardedAmount<MANIFESTATION_SCORE?'（已接近 100 分上限）':''}。`);}
-function reopenManifestation(id){const g=manifestationById(id);if(!g||!g.completed)return;const title=g.title;g.completed=false;g.completedAt=null;const refund=Number(g.scoreAwardedAmount)||0;if(refund>0)applyScoreDelta(-refund,`重新開啟目標：${title}（撤回完工加分）`);g.scoreAwardedAmount=0;save();renderAll();showNotice(`已將「${title}」移回進行中，並撤回原本已入帳的 ${formatScore(refund)} 分。`);}
-function deleteManifestation(id){
-  const g=manifestationById(id);if(!g)return;
-  const title=g.title;
-  // 僅在目標曾完成並實際入帳加分時，刪除紀錄才撤回該筆實際入帳的分數。
-  const refund=g.completed?Math.max(0,roundScore(Number(g.scoreAwardedAmount)||0)):0;
-  const promptText=refund>0
-    ?`確定永久刪除「${title}」及其記錄？此目標曾實際入帳 +${formatScore(refund)} 分；刪除後會撤回這筆加分。`
-    :(g.completed?`確定永久刪除「${title}」及其記錄？此目標沒有實際入帳加分（可能是當時已達 100 分上限），因此不會扣分。`:`確定永久刪除「${title}」及其記錄？這是未完工目標，沒有因完工取得分數，因此不會扣分。`);
-  askConfirm('刪除心想事成？',promptText,()=>{
-    if(refund>0)applyScoreDelta(-refund,`刪除已完工心想事成：${title}（撤回完工加分）`);
-    manifestationGoals=manifestationGoals.filter(x=>x.id!==id);
-    pruneFlowSequence();save();renderAll();
-    showNotice(refund>0?`已刪除「${title}」，並撤回原本入帳的 ${formatScore(refund)} 分。`:`已刪除「${title}」。${g.completed?'此紀錄沒有可撤回的完工加分。':'未完工目標不影響人生分數。'}`);
-  });
-}
-function renderManifestationCard(g,isCompleted){
-  const countdown=manifestationCountdowns.get(g.id);
-  const statusText=isCompleted?'已完工':(countdown?`倒數 ${countdown.number}`:(g.startedAt?'進行中':'尚未開始'));
-  const statusClass=isCompleted?'good':(countdown?'waiting':'');
-  const fields=isCompleted
-    ?`<div class="manifestation-fields"><div class="history-value"><strong>完成了什麼</strong>${htmlEscape(g.actual)||'（未填寫）'}</div><div class="history-value"><strong>紀錄感受</strong>${htmlEscape(g.feeling)||'（未填寫）'}</div></div>`
-    :`<div class="manifestation-fields"><div class="field"><label for="actual-${htmlEscape(g.id)}">完成了什麼</label><textarea id="actual-${htmlEscape(g.id)}" data-manifestation-field="actual" data-goal-id="${htmlEscape(g.id)}" maxlength="5000" placeholder="記錄實際完成的內容，不必修飾……">${htmlEscape(g.actual)}</textarea></div><div class="field"><label for="feeling-${htmlEscape(g.id)}">紀錄感受</label><textarea id="feeling-${htmlEscape(g.id)}" data-manifestation-field="feeling" data-goal-id="${htmlEscape(g.id)}" maxlength="5000" placeholder="記錄情緒、身體感受、腦中的念頭……">${htmlEscape(g.feeling)}</textarea></div></div>`;
-  const timeInfo=isCompleted
-    ?`<div class="completed-at">開始時間：${htmlEscape(fmtDateTime(g.startedAt))}｜完工時間：${htmlEscape(fmtDateTime(g.completedAt))}｜本次入帳：+${formatScore(g.scoreAwardedAmount||0)} 分</div>`
-    :`<div class="manifestation-time">開始時間：${htmlEscape(g.startedAt?fmtDateTime(g.startedAt):(countdown?'語音倒數中…':'尚未記錄'))}</div>`;
-  const actions=isCompleted
-    ?`<button type="button" data-reopen-goal="1" data-goal-id="${htmlEscape(g.id)}">重新開啟</button>`
-    :`${!g.startedAt&&!countdown?`<button type="button" data-start-goal="1" data-goal-id="${htmlEscape(g.id)}">▶ 重新倒數開始</button>`:''}<button type="button" class="primary" data-complete-goal="1" data-goal-id="${htmlEscape(g.id)}" ${countdown?'disabled':''}>✓ 完工（+${formatScore(MANIFESTATION_SCORE)} 分）</button>`;
-  return `<article class="manifestation-card ${isCompleted?'is-done':''}" data-manifestation-id="${htmlEscape(g.id)}"><div class="manifestation-card-head">${isCompleted?`<div style="font-size:18px;font-weight:850;flex:1;min-width:0;overflow-wrap:anywhere">${htmlEscape(g.title)}</div>`:`<input class="manifestation-title-input" data-manifestation-field="title" data-goal-id="${htmlEscape(g.id)}" value="${htmlEscape(g.title)}" maxlength="250" aria-label="踏出的一小步">`}<span class="manifestation-status ${statusClass}">${statusText}</span></div>${timeInfo}${fields}<div class="manifestation-card-actions">${actions}<button type="button" class="danger" data-delete-manifestation="1" data-goal-id="${htmlEscape(g.id)}" ${countdown?'disabled':''}>刪除紀錄</button></div></article>`;
-}
-function renderManifestations(){
-  const active=manifestationGoals.filter(g=>!g.completed);
-  const done=manifestationGoals.filter(g=>g.completed).sort((a,b)=>(b.completedAt||0)-(a.completedAt||0));
-  const query=($('completedSearch')?.value||'').trim().toLocaleLowerCase();
-  const matchedDone=done.filter(g=>{
-    if(!query)return true;
-    const searchable=[g.title,g.actual,g.feeling,g.startedAt?fmtDateTime(g.startedAt):'',g.completedAt?fmtDateTime(g.completedAt):''].join(' ').toLocaleLowerCase();
-    return searchable.includes(query);
-  });
-  if($('activeGoalCount'))$('activeGoalCount').textContent=String(active.length);
-  if($('completedGoalCount'))$('completedGoalCount').textContent=String(done.length);
-  if($('completedSearchCount'))$('completedSearchCount').textContent=String(matchedDone.length);
-  if($('completedManifestations'))$('completedManifestations').innerHTML=matchedDone.map(g=>renderManifestationCard(g,true)).join('');
-  const empty=$('completedManifestationsEmpty');
-  if(empty){
-    empty.classList.toggle('hidden',matchedDone.length>0);
-    if(done.length===0)empty.textContent='尚無完工紀錄。完成一個心想事成後，它會出現在這裡。';
-    else if(query)empty.textContent=`找不到包含「${safeString($('completedSearch')?.value).trim()}」的已完工紀錄。請換一個關鍵字。`;
-    else empty.textContent='沒有可顯示的完工紀錄。';
-  }
-  refreshFlowUi();
-}
-function addRoutine(title){const t=safeString(title).trim();if(!t)return;if(routineItems.some(x=>x.title.toLocaleLowerCase()===t.toLocaleLowerCase())){showNotice('已存在相同名稱的 Routine。');return;}routineItems.unshift({id:makeId(),title:t,createdAt:Date.now(),completions:[]});save();renderRoutine();showNotice(`已新增每日 Routine「${t}」。`);}
-function routineById(id){return routineItems.find(x=>x.id===id);}
-function completeRoutine(id){const item=routineById(id);if(!item)return;if(routineCountdowns.has(id)){showNotice('請等 5 秒倒數結束並開始執行 Routine，完成後再按「完成今日 Routine」。');return;}const date=taiwanDate();if(routineTodayCompletion(item,date)){showNotice(`「${item.title}」今天已完成；同一項每日只計分一次。`);return;}const actual=applyScoreDelta(ROUTINE_SCORE,`Routine 完成：${item.title}（${date}）`);item.completions.push({date,at:Date.now(),scoreAwardedAmount:actual});save();renderScore();renderRoutine();showNotice(actual>0?`「${item.title}」已記錄為今日完成，人生分數 +${formatScore(actual)} 分。`:`「${item.title}」已記錄為今日完成；人生分數已達 100 分上限，因此本次未增加分數。`);}
-function startRoutineCountdown(id){const item=routineById(id);if(!item)return;const date=taiwanDate();if(routineTodayCompletion(item,date)){showNotice(`「${item.title}」今天已完成，不需要再次倒數。`);return;}if(manifestationCountdowns.size||routineCountdowns.size||flowCountdowns.size){showNotice('目前已有一個五秒倒數，請等倒數完成後再開始另一項。');return;}const numbers=[{text:'五',display:5},{text:'四',display:4},{text:'三',display:3},{text:'二',display:2},{text:'一',display:1}];let index=0;let speechFailed=!(('speechSynthesis' in window)&&('SpeechSynthesisUtterance' in window));let errorNotified=false;routineCountdowns.set(id,{number:5});renderRoutine();const finish=()=>{if(!routineCountdowns.has(id))return;routineCountdowns.delete(id);renderRoutine();showNotice(`「${item.title}」的 5 秒倒數完成。現在開始執行；完成後再按「✓ 完成今日 Routine」。`);};const speakNext=()=>{if(!routineCountdowns.has(id))return;if(index>=numbers.length){finish();return;}const current=numbers[index];routineCountdowns.set(id,{number:current.display});renderRoutine();if(speechFailed){index++;setTimeout(speakNext,1000);return;}const utterance=new SpeechSynthesisUtterance(current.text);utterance.lang='zh-TW';utterance.rate=0.85;utterance.pitch=1;utterance.volume=1;const voices=window.speechSynthesis.getVoices();const voice=voices.find(v=>/^zh[-_]TW/i.test(v.lang))||voices.find(v=>/^zh/i.test(v.lang));if(voice)utterance.voice=voice;utterance.onend=()=>{if(!routineCountdowns.has(id))return;index++;setTimeout(speakNext,500);};utterance.onerror=()=>{if(!routineCountdowns.has(id))return;speechFailed=true;index++;if(!errorNotified){errorNotified=true;showNotice('瀏覽器語音播放未能完成，改用畫面倒數；倒數結束後即可開始 Routine。');}setTimeout(speakNext,1000);};try{window.speechSynthesis.speak(utterance);}catch(err){speechFailed=true;index++;if(!errorNotified){errorNotified=true;showNotice('瀏覽器無法播放語音，改用畫面倒數。');}setTimeout(speakNext,1000);}};if('speechSynthesis' in window){try{window.speechSynthesis.cancel();}catch(err){}}speakNext();}
-function deleteRoutine(id){const item=routineById(id);if(!item)return;if(routineCountdowns.has(id)){showNotice('倒數進行中，請先等倒數結束再刪除。');return;}askConfirm('刪除 Routine？',`確定刪除「${item.title}」？此 Routine 的完成歷史會一起移除，但過去已獲得的人生分數不會回溯扣除。`,()=>{routineItems=routineItems.filter(x=>x.id!==id);pruneFlowSequence();save();renderRoutine();showNotice(`已刪除 Routine「${item.title}」。過去已入帳分數保留。`);});}
-function renderRoutineCard(item,date){const completion=routineTodayCompletion(item,date);const countdown=routineCountdowns.get(item.id);const total=(item.completions||[]).length;const recent=[...(item.completions||[])].sort((a,b)=>(b.at||0)-(a.at||0)).slice(0,5);const history=recent.length?`<div class="routine-history"><strong>最近完成紀錄：</strong>\n${recent.map(c=>`${c.date}｜+${formatScore(c.scoreAwardedAmount||0)} 分`).join('\n')}</div>`:'<div class="routine-history">尚無完成紀錄。</div>';return `<article class="routine-card ${completion?'done-today':''}" data-routine-id="${htmlEscape(item.id)}"><div class="routine-head"><div class="routine-title">${htmlEscape(item.title)}</div><span class="routine-status ${completion?'done':''}">${completion?'今日已完成':(countdown?`倒數中：${countdown.number}`:'今日待完成')}</span></div><div class="history-meta"><span>累計完成：${total} 天</span>${completion?`<span>今日入帳：+${formatScore(completion.scoreAwardedAmount||0)} 分</span>`:`<span>今日完成可得：最多 +${formatScore(ROUTINE_SCORE)} 分</span>`}</div><div class="routine-actions"><div class="routine-countdown-row"><button type="button" class="routine-countdown-btn" data-routine-action="countdown" data-routine-id="${htmlEscape(item.id)}" ${completion||countdown?'disabled':''}>${countdown?`倒數中：${countdown.number}`:'▶ 5 秒倒數'}</button></div><button type="button" class="primary routine-done-btn" data-routine-action="complete" data-routine-id="${htmlEscape(item.id)}" ${completion||countdown?'disabled':''}>${completion?'✓ 今日已完成':'✓ 完成今日 Routine（+'+formatScore(ROUTINE_SCORE)+' 分）'}</button><button type="button" class="danger" data-routine-action="delete" data-routine-id="${htmlEscape(item.id)}" ${countdown?'disabled':''}>刪除 Routine</button></div>${history}</article>`;}
-function renderRoutine(){const date=taiwanDate();const todayDone=routineItems.filter(x=>routineTodayCompletion(x,date));const todayPoints=roundScore(todayDone.reduce((sum,x)=>sum+Number(routineTodayCompletion(x,date)?.scoreAwardedAmount||0),0));$('routineTaiwanDate').textContent=date;$('routineTotalCount').textContent=String(routineItems.length);$('routineTodayCount').textContent=`${todayDone.length} / ${routineItems.length}`;$('routineTodayScore').textContent=formatScore(todayPoints);$('routineItems').innerHTML=routineItems.map(x=>renderRoutineCard(x,date)).join('');$('routineEmpty').classList.toggle('hidden',routineItems.length>0);refreshFlowUi();}
-function addEnduranceItem(title){const t=safeString(title).trim();if(!t)return;enduranceItems.unshift({id:makeId(),title:t,createdAt:Date.now(),startedAt:null,endedAt:null});save();renderEndurance();showNotice(`已新增忍耐項目「${t}」。準備好時按「開始」記錄開始時間。`);}
-function enduranceById(id){return enduranceItems.find(x=>x.id===id);}
-function startEndurance(id){const item=enduranceById(id);if(!item||item.startedAt)return;item.startedAt=Date.now();item.endedAt=null;save();renderEndurance();showNotice(`「${item.title}」已開始，開始時間：${fmtDateTime(item.startedAt)}。`);}
-function endEndurance(id){const item=enduranceById(id);if(!item||!item.startedAt||item.endedAt)return;item.endedAt=Date.now();save();renderEndurance();showNotice(`「${item.title}」已結束，結束時間：${fmtDateTime(item.endedAt)}。紀錄已保留。`);}
-function restartEndurance(id){const item=enduranceById(id);if(!item||!item.endedAt)return;addEnduranceItem(item.title);}
-function deleteEndurance(id){const item=enduranceById(id);if(!item)return;askConfirm('刪除忍耐紀錄？',`確定刪除「${item.title}」${item.startedAt?`（開始：${fmtDateTime(item.startedAt)}）`:''}${item.endedAt?`（結束：${fmtDateTime(item.endedAt)}）`:''}？`,()=>{enduranceItems=enduranceItems.filter(x=>x.id!==id);save();renderEndurance();showNotice(`已刪除忍耐紀錄「${item.title}」。`);});}
-function renderEnduranceCard(item,ended=false){const status=ended?'已結束':(item.startedAt?'忍耐中':'尚未開始');const cls=ended?'ended':(item.startedAt?'active':'');return `<article class="endurance-card ${cls}" data-endurance-id="${htmlEscape(item.id)}"><div class="endurance-head"><div class="endurance-title">${htmlEscape(item.title)}</div><span class="endurance-status ${cls}">${status}</span></div><div class="endurance-times"><div class="endurance-time"><strong>開始日期／時間</strong>${item.startedAt?htmlEscape(fmtDateTime(item.startedAt)):'尚未開始'}</div><div class="endurance-time"><strong>結束日期／時間</strong>${item.endedAt?htmlEscape(fmtDateTime(item.endedAt)):'尚未結束'}</div></div><div class="endurance-actions">${ended?`<button type="button" data-endurance-action="restart" data-endurance-id="${htmlEscape(item.id)}">再次開始一輪</button>`:item.startedAt?`<button type="button" class="primary" data-endurance-action="end" data-endurance-id="${htmlEscape(item.id)}">✓ 結束</button>`:`<button type="button" class="primary" data-endurance-action="start" data-endurance-id="${htmlEscape(item.id)}">▶ 開始</button>`}<button type="button" class="danger" data-endurance-action="delete" data-endurance-id="${htmlEscape(item.id)}">刪除</button></div></article>`;}
-function renderEndurance(){const active=enduranceItems.filter(x=>!x.endedAt);const ended=enduranceItems.filter(x=>!!x.endedAt).sort((a,b)=>(b.endedAt||0)-(a.endedAt||0));const pending=active.filter(x=>!x.startedAt);const running=active.filter(x=>!!x.startedAt);$('pendingEnduranceCount').textContent=String(pending.length);$('activeEnduranceCount').textContent=String(running.length);$('endedEnduranceCount').textContent=String(ended.length);$('activeEnduranceItems').innerHTML=active.map(x=>renderEnduranceCard(x,false)).join('');$('activeEnduranceEmpty').classList.toggle('hidden',active.length>0);$('endedEnduranceItems').innerHTML=ended.map(x=>renderEnduranceCard(x,true)).join('');$('endedEnduranceEmpty').classList.toggle('hidden',ended.length>0);}
-function folderById(id){return goalFolders.find(f=>f.id===id);}
-function itemById(folder,id){return folder&&folder.items.find(i=>i.id===id);}
-function addFolder(name){const n=safeString(name).trim();if(!n)return;const id=makeId();goalFolders.push({id,name:n,items:[]});save();renderChecklist();const el=document.querySelector(`[data-folder-id="${CSS.escape(id)}"]`);if(el)el.open=true;showNotice(`已新增母目錄「${n}」。`);}
-function addGoal(folderId,title){const f=folderById(folderId),t=safeString(title).trim();if(!f||!t)return;if(f.items.some(i=>i.title.toLocaleLowerCase()===t.toLocaleLowerCase())){showNotice('這個母目錄已有相同名稱的目標。');return;}f.items.push({id:makeId(),title:t,done:false,scoreAwardedAmount:0,subTasks:[]});save();renderChecklist();const el=document.querySelector(`[data-folder-id="${CSS.escape(folderId)}"]`);if(el)el.open=true;showNotice(`已新增目標「${t}」。`);}
-function addSubtask(folderId,itemId,title){const f=folderById(folderId),i=itemById(f,itemId),t=safeString(title).trim();if(!i||!t)return;i.subTasks=Array.isArray(i.subTasks)?i.subTasks:[];if(i.subTasks.some(st=>st.title.toLocaleLowerCase()===t.toLocaleLowerCase())){showNotice('這個目標已有相同名稱的子任務。');return;}i.subTasks.push({id:makeId(),title:t,done:false,createdAt:Date.now()});save();renderChecklist();const detail=document.querySelector(`.subtask-details[data-folder-id="${CSS.escape(folderId)}"][data-item-id="${CSS.escape(itemId)}"]`);if(detail)detail.open=true;showNotice(`已新增子任務「${t}」。子任務完成不加分；完成主目標才依原規則加分。`);}
-function subtaskById(item,subtaskId){return item&&Array.isArray(item.subTasks)?item.subTasks.find(st=>st.id===subtaskId):null;}
-function toggleChecklistSubtask(folderId,itemId,subtaskId,done){const f=folderById(folderId),i=itemById(f,itemId),st=subtaskById(i,subtaskId);if(!st)return;if(st.done===!!done)return;st.done=!!done;save();renderChecklist();showNotice(st.done?`子任務「${st.title}」已完成；此子任務不加分。`:`已取消子任務「${st.title}」的完成狀態；不影響人生分數。`);}
-function renameChecklistSubtask(folderId,itemId,subtaskId){const f=folderById(folderId),i=itemById(f,itemId),st=subtaskById(i,subtaskId);if(!st)return;const title=prompt('輸入新的子任務名稱：',st.title);if(title===null)return;if(!title.trim()){showNotice('子任務名稱不能空白。');return;}st.title=title.trim();save();renderChecklist();}
-function pruneFlowSequence(){const keys=new Set(flowCatalog().map(x=>x.key));flowSequence=flowSequence.filter(entry=>keys.has(entry.key));const validEntries=new Set(flowSequence.map(entry=>entry.id));for(const id of flowCountdowns.keys())if(!validEntries.has(id))flowCountdowns.delete(id);}
-function deleteChecklistSubtask(folderId,itemId,subtaskId){const f=folderById(folderId),i=itemById(f,itemId),st=subtaskById(i,subtaskId);if(!st)return;askConfirm('刪除子任務？',`確定刪除子任務「${st.title}」？此操作不影響人生分數。`,()=>{i.subTasks=i.subTasks.filter(x=>x.id!==subtaskId);pruneFlowSequence();save();renderChecklist();showNotice(`已刪除子任務「${st.title}」。`);});}
-function toggleChecklistGoal(folderId,itemId,done){const f=folderById(folderId),i=itemById(f,itemId);if(!i)return;const next=!!done;if(i.done===next)return;i.done=next;if(next){i.scoreAwardedAmount=applyScoreDelta(1,`Checklist 完成：${i.title}`);save();renderScore();renderChecklist();showNotice(`Checklist「${i.title}」已完成，人生分數 +${formatScore(i.scoreAwardedAmount)} 分。`);}else{const refund=Number(i.scoreAwardedAmount)||0;if(refund>0)applyScoreDelta(-refund,`取消 Checklist 完成：${i.title}`);i.scoreAwardedAmount=0;save();renderScore();renderChecklist();showNotice(`已取消「${i.title}」的完成狀態，撤回已入帳 ${formatScore(refund)} 分。`);}}
-function renameFolder(id){const f=folderById(id);if(!f)return;const name=prompt('輸入新的母目錄名稱：',f.name);if(name===null)return;if(!name.trim()){showNotice('母目錄名稱不能空白。');return;}f.name=name.trim();save();renderChecklist();}
-function deleteFolder(id){const f=folderById(id);if(!f)return;askConfirm(`刪除母目錄「${f.name}」？`,`這會連同底下 ${f.items.length} 個目標及其子任務一起刪除，無法復原。`,()=>{goalFolders=goalFolders.filter(x=>x.id!==id);pruneFlowSequence();save();renderChecklist();});}
-function renameChecklistGoal(folderId,itemId){const f=folderById(folderId),i=itemById(f,itemId);if(!i)return;const title=prompt('輸入新的目標名稱：',i.title);if(title===null)return;if(!title.trim()){showNotice('目標名稱不能空白。');return;}i.title=title.trim();save();renderChecklist();}
-function deleteChecklistGoal(folderId,itemId){const f=folderById(folderId),i=itemById(f,itemId);if(!f||!i)return;askConfirm('刪除這個目標？',`確定刪除「${i.title}」及其 ${i.subTasks?.length||0} 個子任務？`,()=>{f.items=f.items.filter(x=>x.id!==itemId);pruneFlowSequence();save();renderChecklist();});}
-function renderChecklist(){
-  const host=$('goalFolders');
-  const previouslyOpen=new Set([...host.querySelectorAll('.goal-folder[open]')].map(d=>d.dataset.folderId));
-  const previouslyOpenSubtasks=new Set([...host.querySelectorAll('.subtask-details[open]')].map(d=>`${d.dataset.folderId}::${d.dataset.itemId}`));
-  const q=$('goalSearch').value.trim().toLocaleLowerCase();
-  let total=0,done=0;goalFolders.forEach(f=>f.items.forEach(i=>{total++;if(i.done)done++;}));
-  $('goalsDoneText').textContent=`${done} / ${total}`;
-  const filtered=goalFolders.map(f=>({...f,visibleItems:f.items.filter(i=>!q||f.name.toLocaleLowerCase().includes(q)||i.title.toLocaleLowerCase().includes(q)||(i.subTasks||[]).some(st=>st.title.toLocaleLowerCase().includes(q)))})).filter(f=>!q||f.name.toLocaleLowerCase().includes(q)||f.visibleItems.length>0);
-  if(!filtered.length){host.innerHTML='<div class="empty-state">找不到符合的母目錄或目標。仍可新增母目錄或清除搜尋。</div>';refreshFlowUi();return;}
-  host.innerHTML=filtered.map(f=>{
-    const folderDone=f.items.filter(i=>i.done).length;
-    const items=f.visibleItems.map(i=>{
-      const subs=Array.isArray(i.subTasks)?i.subTasks:[];
-      const subOpen=previouslyOpenSubtasks.has(`${f.id}::${i.id}`)?'open':'';
-      const subMarkup=`<details class="subtask-details" data-folder-id="${htmlEscape(f.id)}" data-item-id="${htmlEscape(i.id)}" data-subtask-parent="${htmlEscape(i.id)}" ${subOpen}><summary>子任務清單（${subs.filter(st=>st.done).length}/${subs.length} 完成；子任務不加分）</summary><div class="subtask-content"><div class="subtask-note">完成子任務只記錄進度；只有勾選上方主目標「${htmlEscape(i.title)}」才依原規則加 1 分。</div>${subs.length?`<ul class="subtask-list">${subs.map(st=>`<li class="subtask-li ${st.done?'done':''}"><label><input type="checkbox" data-subtask-toggle="1" data-folder-id="${htmlEscape(f.id)}" data-item-id="${htmlEscape(i.id)}" data-subtask-id="${htmlEscape(st.id)}" ${st.done?'checked':''}><span class="subtask-title">${htmlEscape(st.title)}</span></label><div class="subtask-actions"><button class="small" type="button" data-checklist-action="rename-subtask" data-folder-id="${htmlEscape(f.id)}" data-item-id="${htmlEscape(i.id)}" data-subtask-id="${htmlEscape(st.id)}">改名</button><button class="small danger" type="button" data-checklist-action="delete-subtask" data-folder-id="${htmlEscape(f.id)}" data-item-id="${htmlEscape(i.id)}" data-subtask-id="${htmlEscape(st.id)}">刪除</button></div></li>`).join('')}</ul>`:'<div class="empty-state">尚無子任務。</div>'}<form class="add-subtask-form" data-folder-id="${htmlEscape(f.id)}" data-item-id="${htmlEscape(i.id)}"><input name="subtaskTitle" maxlength="250" placeholder="新增子任務，例如：買書、買筆" aria-label="新增子任務" required><button type="submit">＋ 新增子任務</button></form></div></details>`;
-      return `<li class="goal-li ${i.done?'done':''}"><label><input type="checkbox" data-checklist-toggle="1" data-folder-id="${htmlEscape(f.id)}" data-item-id="${htmlEscape(i.id)}" ${i.done?'checked':''}><span class="goal-title">${htmlEscape(i.title)}</span></label><div class="item-actions"><button class="small" type="button" data-checklist-action="rename-item" data-folder-id="${htmlEscape(f.id)}" data-item-id="${htmlEscape(i.id)}">改名</button><button class="small danger" type="button" data-checklist-action="delete-item" data-folder-id="${htmlEscape(f.id)}" data-item-id="${htmlEscape(i.id)}">刪除</button></div>${subMarkup}</li>`;
-    }).join('');
-    const opened=q?'open':((previouslyOpen.has(f.id)||(!previouslyOpen.size&&f.name==='要看'))?'open':'');
-    return `<details class="goal-folder" data-folder-id="${htmlEscape(f.id)}" ${opened}><summary><span class="folder-name">${htmlEscape(f.name)}</span><span class="folder-progress">${folderDone} / ${f.items.length} 已完成</span></summary><div class="folder-content"><div class="folder-tools"><button class="small" type="button" data-checklist-action="rename-folder" data-folder-id="${htmlEscape(f.id)}">重新命名母目錄</button><button class="small danger" type="button" data-checklist-action="delete-folder" data-folder-id="${htmlEscape(f.id)}">刪除母目錄</button></div>${items?`<ul class="goal-list">${items}</ul>`:`<div class="empty-state">這個目錄目前沒有項目${q?'（目前沒有符合搜尋的項目）':'，請在下方新增。'}</div>`}<form class="add-goal-form" data-folder-id="${htmlEscape(f.id)}"><input name="goalTitle" maxlength="250" placeholder="在「${htmlEscape(f.name)}」新增目標…" aria-label="新增目標" required><button type="submit">＋ 新增</button></form></div></details>`;
-  }).join('');
-  refreshFlowUi();
-}
-function flowCatalog(){
-  const list=[];
-  manifestationGoals.forEach(g=>list.push({key:`m::${g.id}`,type:'manifestation',id:g.id,title:g.title,group:'心想事成',done:!!g.completed}));
-  routineItems.forEach(r=>list.push({key:`r::${r.id}`,type:'routine',id:r.id,title:r.title,group:'每天要做｜Routine',done:!!routineTodayCompletion(r)}));
-  goalFolders.forEach(f=>f.items.forEach(i=>{
-    list.push({key:`c::${f.id}::${i.id}`,type:'checklist',id:i.id,folderId:f.id,title:i.title,group:`目標 Checklist｜${f.name}`,done:!!i.done});
-    (i.subTasks||[]).forEach(st=>list.push({key:`s::${f.id}::${i.id}::${st.id}`,type:'subtask',id:st.id,parentId:i.id,folderId:f.id,title:st.title,group:`子任務｜${f.name} › ${i.title}`,done:!!st.done}));
-  }));
-  return list;
-}
-function flowAvailableSources(type){return flowCatalog().filter(x=>{
-  if(type==='manifestation')return x.type==='manifestation'&&!x.done;
-  if(type==='routine')return x.type==='routine';
-  return (x.type==='checklist'||x.type==='subtask')&&!x.done;
-});}
-function textMatches(value,query){return safeString(value).toLocaleLowerCase().includes(query);}
-function renderFlowSelect(id,type,placeholder,searchId){
-  const select=$(id);if(!select)return;const old=select.value;const query=(searchId?$(searchId).value:'').trim().toLocaleLowerCase();
-  const sources=flowAvailableSources(type).filter(x=>!query||textMatches(x.title,query)||textMatches(x.group,query));
-  select.innerHTML=`<option value="">${htmlEscape(placeholder)}</option>`+sources.map(x=>`<option value="${htmlEscape(x.key)}">${htmlEscape(x.title)}${type==='manifestation'?'':`｜${htmlEscape(x.group)}`}</option>`).join('');
-  if(sources.some(x=>x.key===old))select.value=old;
-}
-function renderChecklistFlowSelectors(){
-  const folderSelect=$('flowChecklistFolder'),goalSelect=$('flowChecklistGoal'),subSelect=$('flowChecklistSubtask');
-  if(!folderSelect||!goalSelect||!subSelect)return;
-  const query=$('flowChecklistSearch').value.trim().toLocaleLowerCase();
-  const oldFolder=folderSelect.value,oldGoal=goalSelect.value,oldSub=subSelect.value;
-  const folderHasItems=f=>f.items.some(i=>(!i.done)||((i.subTasks||[]).some(st=>!st.done)));
-  const folderMatches=f=>folderHasItems(f)&&(!query||textMatches(f.name,query)||f.items.some(i=>(!i.done&&textMatches(i.title,query))||(i.subTasks||[]).some(st=>!st.done&&textMatches(st.title,query))));
-  const folders=goalFolders.filter(folderMatches);
-  folderSelect.innerHTML='<option value="">先選擇分類…</option>'+folders.map(f=>`<option value="${htmlEscape(f.id)}">${htmlEscape(f.name)} (${f.items.filter(i=>!i.done||(i.subTasks||[]).some(st=>!st.done)).length})</option>`).join('');
-  if(folders.some(f=>f.id===oldFolder))folderSelect.value=oldFolder;else folderSelect.value='';
-  const selectedFolder=folderById(folderSelect.value);
-  const folderNameMatches=!!(selectedFolder&&query&&textMatches(selectedFolder.name,query));
-  const goals=selectedFolder?selectedFolder.items.filter(i=>{
-    const hasPending=!i.done||(i.subTasks||[]).some(st=>!st.done);
-    return hasPending&&(!query||folderNameMatches||textMatches(i.title,query)||(i.subTasks||[]).some(st=>!st.done&&textMatches(st.title,query)));
-  }):[];
-  goalSelect.disabled=!selectedFolder;
-  goalSelect.innerHTML=`<option value="">${selectedFolder?'選擇主目標…':'先選擇分類…'}</option>`+goals.map(i=>`<option value="${htmlEscape(i.id)}">${htmlEscape(i.title)}${i.done?'（主目標已完成）':''}</option>`).join('');
-  if(goals.some(i=>i.id===oldGoal))goalSelect.value=oldGoal;else goalSelect.value='';
-  const selectedGoal=selectedFolder&&itemById(selectedFolder,goalSelect.value);
-  const goalNameMatches=!!(selectedGoal&&query&&textMatches(selectedGoal.title,query));
-  const subtasks=selectedGoal?(selectedGoal.subTasks||[]).filter(st=>!st.done&&(!query||folderNameMatches||goalNameMatches||textMatches(st.title,query))):[];
-  subSelect.disabled=!selectedGoal;
-  subSelect.innerHTML=`<option value="">${selectedGoal?'選擇子任務（可留空）…':'先選主目標…'}</option>`+subtasks.map(st=>`<option value="${htmlEscape(st.id)}">${htmlEscape(st.title)}</option>`).join('');
-  if(subtasks.some(st=>st.id===oldSub))subSelect.value=oldSub;else subSelect.value='';
-  $('flowAddChecklistGoal').disabled=!selectedFolder||!selectedGoal||!!selectedGoal.done;
-  $('flowAddChecklistSubtask').disabled=!selectedFolder||!selectedGoal||!subSelect.value;
-}
-function resolveFlowEntry(entry){return flowCatalog().find(x=>x.key===entry.key)||{key:entry.key,title:entry.titleSnapshot||'已移除的項目',group:entry.groupSnapshot||'來源項目已移除',done:false,type:'removed'};}
-function flowCountdownState(src,entry){
-  if(src.type==='manifestation')return manifestationCountdowns.get(src.id)||null;
-  if(src.type==='routine')return routineCountdowns.get(src.id)||null;
-  return flowCountdowns.get(entry.id)||null;
-}
-function flowNodeActionMarkup(src,index,entry){
-  const at=`data-flow-index="${index}"`;
-  const countdown=flowCountdownState(src,entry);
-  const running=!!countdown;
-  const canCountdown=['manifestation','routine','checklist','subtask'].includes(src.type);
-  const countdownBtn=canCountdown
-    ?`<button type="button" class="flow-countdown-btn ${running?'is-counting':''}" data-flow-action="countdown" ${at} ${src.done||running?'disabled':''}>${running?`倒數中：${countdown.number}`:(src.done?'5 秒倒數（已完成）':'▶ 5 秒倒數')}</button>`
-    :`<button type="button" class="flow-countdown-btn" disabled>來源項目已移除</button>`;
-  let complete='';
-  if(src.type==='manifestation'){
-    complete=src.done?`<button type="button" disabled>✓ 已完工</button><button type="button" data-flow-action="reopen" ${at}>重新開啟</button>`:`<button type="button" class="flow-complete" data-flow-action="complete" ${at} ${running?'disabled':''}>✓ 完工（+${formatScore(MANIFESTATION_SCORE)} 分）</button>`;
-  }else if(src.type==='routine'){
-    complete=src.done?`<button type="button" disabled>✓ 今日已完成</button>`:`<button type="button" class="flow-complete" data-flow-action="complete" ${at} ${running?'disabled':''}>✓ 完成今日 Routine（+${formatScore(ROUTINE_SCORE)} 分）</button>`;
-  }else if(src.type==='checklist'){
-    complete=src.done?`<button type="button" disabled>✓ 已完成</button><button type="button" data-flow-action="undo" ${at}>取消完成</button>`:`<button type="button" class="flow-complete" data-flow-action="complete" ${at} ${running?'disabled':''}>✓ 主目標完工（+1 分）</button>`;
-  }else if(src.type==='subtask'){
-    complete=src.done?`<button type="button" disabled>✓ 已完成（不加分）</button><button type="button" data-flow-action="undo" ${at}>取消完成</button>`:`<button type="button" class="flow-complete" data-flow-action="complete" ${at} ${running?'disabled':''}>✓ 子任務完工（不加分）</button>`;
-  }else complete='<button type="button" disabled>來源項目已移除</button>';
-  const busy=running;
-  return `${countdownBtn}${complete}${src.type==='manifestation'?`<button type="button" class="danger" data-flow-action="delete-manifestation" ${at} ${busy?'disabled':''}>刪除紀錄</button>`:''}<button type="button" data-flow-action="up" ${at} ${index===0||busy?'disabled':''} aria-label="第 ${index+1} 步上移">↑ 上移</button><button type="button" data-flow-action="down" ${at} ${index===flowSequence.length-1||busy?'disabled':''} aria-label="第 ${index+1} 步下移">↓ 下移</button><button type="button" class="danger" data-flow-action="remove" ${at} ${busy?'disabled':''}>移除流程圖</button>`;
-}
-function flowManifestationDetails(src){
-  if(src.type!=='manifestation'||src.done)return '';
-  const g=manifestationById(src.id);if(!g)return '';
-  return `<div class="flow-node-details">
-    <div class="field"><label for="flow-title-${htmlEscape(g.id)}">踏出什麼</label><input id="flow-title-${htmlEscape(g.id)}" data-manifestation-field="title" data-goal-id="${htmlEscape(g.id)}" maxlength="250" value="${htmlEscape(g.title)}" aria-label="編輯心想事成標題"></div>
-    <div class="field"><label for="flow-actual-${htmlEscape(g.id)}">完成了什麼</label><textarea id="flow-actual-${htmlEscape(g.id)}" data-manifestation-field="actual" data-goal-id="${htmlEscape(g.id)}" maxlength="5000" placeholder="記錄實際完成的內容，不必修飾……">${htmlEscape(g.actual)}</textarea></div>
-    <div class="field" style="grid-column:1/-1"><label for="flow-feeling-${htmlEscape(g.id)}">紀錄感受</label><textarea id="flow-feeling-${htmlEscape(g.id)}" data-manifestation-field="feeling" data-goal-id="${htmlEscape(g.id)}" maxlength="5000" placeholder="記錄情緒、身體感受、腦中的念頭……">${htmlEscape(g.feeling)}</textarea></div>
-  </div>`;
-}
-function renderFlowChart(){
-  const host=$('flowChart');if(!host)return;
-  if(!flowSequence.length){host.innerHTML='<div class="flow-empty">流程圖目前是空的。先在上方輸入今天的「心想事成」，或從 Routine／Checklist 加入項目。</div>';return;}
-  host.innerHTML=flowSequence.map((entry,index)=>{
-    const src=resolveFlowEntry(entry),countdown=flowCountdownState(src,entry);
-    const status=countdown?`倒數中 ${countdown.number}`:(src.done?(src.type==='routine'?'今日已完成':'已完成'):'待執行');
-    return `${index?'<div class="flow-arrow" aria-hidden="true">↓</div>':''}<article class="flow-node ${src.done?'is-done':''}" data-flow-id="${htmlEscape(entry.id)}"><div class="flow-node-main"><div class="flow-node-step">第 ${index+1} 步 · ${htmlEscape(status)}</div><div class="flow-node-title ${src.done?'flow-node-done-title':''}">${htmlEscape(src.title)}</div><div class="flow-node-meta">${htmlEscape(src.group)}</div>${src.type==='manifestation'&&src.done?`<div class="flow-node-meta">開始時間：${htmlEscape(fmtDateTime(manifestationById(src.id)?.startedAt))}｜完工時間：${htmlEscape(fmtDateTime(manifestationById(src.id)?.completedAt))}</div>`:''}</div><div class="flow-node-actions">${flowNodeActionMarkup(src,index,entry)}</div>${flowManifestationDetails(src)}</article>`;
-  }).join('');
-}
-function startGenericFlowCountdown(entryId,title){
-  if(manifestationCountdowns.size||routineCountdowns.size||flowCountdowns.size){showNotice('目前已有一個五秒倒數，請等倒數完成後再開始另一項。');return;}
-  const entry=flowSequence.find(x=>x.id===entryId);if(!entry)return;
-  const src=resolveFlowEntry(entry);if(src.done){showNotice(`「${src.title}」已完成，不需要再次倒數。`);return;}
-  const numbers=[{text:'五',display:5},{text:'四',display:4},{text:'三',display:3},{text:'二',display:2},{text:'一',display:1}];
-  let index=0,failed=!(('speechSynthesis' in window)&&('SpeechSynthesisUtterance' in window)),finished=false;
-  flowCountdowns.set(entryId,{number:5});renderFlowChart();
-  const updateNumber=n=>{if(!flowCountdowns.has(entryId))return;flowCountdowns.set(entryId,{number:n});renderFlowChart();};
-  const finish=()=>{if(finished||!flowCountdowns.has(entryId))return;finished=true;flowCountdowns.delete(entryId);renderFlowChart();showNotice(`「${title}」的 5 秒倒數完成。現在開始執行；完成後再按對應的完工按鈕。`);};
-  const fallbackStep=()=>{
-    if(!flowCountdowns.has(entryId))return;
-    if(index>=numbers.length){finish();return;}
-    updateNumber(numbers[index].display);index++;setTimeout(fallbackStep,1000);
-  };
-  const speakNext=()=>{
-    if(!flowCountdowns.has(entryId))return;
-    if(index>=numbers.length){finish();return;}
-    const n=numbers[index];updateNumber(n.display);
-    if(failed){index++;setTimeout(speakNext,1000);return;}
-    const utterance=new SpeechSynthesisUtterance(n.text);utterance.lang='zh-TW';utterance.rate=0.85;utterance.pitch=1;utterance.volume=1;
-    const voices=window.speechSynthesis.getVoices();const voice=voices.find(v=>/^zh[-_]TW/i.test(v.lang))||voices.find(v=>/^zh/i.test(v.lang));if(voice)utterance.voice=voice;
-    utterance.onend=()=>{if(!flowCountdowns.has(entryId))return;index++;setTimeout(speakNext,180);};
-    utterance.onerror=()=>{if(!flowCountdowns.has(entryId))return;failed=true;index=0;showNotice('瀏覽器語音播放未能完成，改用畫面倒數。');setTimeout(fallbackStep,1000);};
-    try{window.speechSynthesis.speak(utterance);}catch(err){failed=true;index=0;setTimeout(fallbackStep,1000);}
-  };
-  if('speechSynthesis' in window){try{window.speechSynthesis.cancel();}catch(err){}}
-  speakNext();
-}
-function startFlowCountdown(index){
-  const entry=flowSequence[index];if(!entry)return;
-  const src=resolveFlowEntry(entry);if(src.done){showNotice(`「${src.title}」已完成，不需要再次倒數。`);return;}
-  if(src.type==='manifestation'){startManifestationCountdown(src.id);return;}
-  if(src.type==='routine'){startRoutineCountdown(src.id);return;}
-  if(src.type==='checklist'||src.type==='subtask'){startGenericFlowCountdown(entry.id,src.title);return;}
-  showNotice('這個項目的來源已不存在，請移除後重新加入。');
-}
-function refreshFlowUi(){
-  if(!$('flowInsertPosition'))return;
-  renderFlowSelect('flowRoutineSelect','routine','選擇每日 Routine…','flowRoutineSearch');
-  renderChecklistFlowSelectors();
-  const select=$('flowInsertPosition');const old=select.value;const opts=flowSequence.map((entry,index)=>{const src=resolveFlowEntry(entry);return `<option value="${index}">第 ${index+1} 步之前：${htmlEscape(src.title)}</option>`;}).join('');
-  select.innerHTML=opts+'<option value="end">最後一步之後</option>';
-  if([...select.options].some(o=>o.value===old))select.value=old;else select.value='end';
-  renderFlowChart();
-}
-function addFlowKey(key){
-  if(!key){showNotice('請先選擇要加入流程圖的項目。');return;}
-  const src=flowCatalog().find(x=>x.key===key);if(!src){showNotice('找不到這個項目，請重新選擇。');refreshFlowUi();return;}
-  if(src.done){showNotice(`「${src.title}」已完成，無須再次加入待辦流程。`);return;}
-  if(flowSequence.some(x=>x.key===key)){showNotice(`「${src.title}」已在流程圖中。可用上移／下移調整它的位置。`);return;}
-  const selected=$('flowInsertPosition').value;const index=selected==='end'?flowSequence.length:Math.max(0,Math.min(flowSequence.length,Number.parseInt(selected,10)||0));
-  flowSequence.splice(index,0,{id:makeId(),key,titleSnapshot:src.title,groupSnapshot:src.group,addedAt:Date.now()});
-  save();refreshFlowUi();showNotice(`已將「${src.title}」加入流程圖第 ${index+1} 步。`);
-}
-function addFlowItem(type){
-  if(type==='checklist-goal'){
-    const folder=folderById($('flowChecklistFolder').value),goal=itemById(folder,$('flowChecklistGoal').value);
-    if(!folder||!goal){showNotice('請先選擇分類與主目標。');return;}
-    addFlowKey(`c::${folder.id}::${goal.id}`);return;
-  }
-  if(type==='checklist-subtask'){
-    const folder=folderById($('flowChecklistFolder').value),goal=itemById(folder,$('flowChecklistGoal').value),sub= subtaskById(goal,$('flowChecklistSubtask').value);
-    if(!folder||!goal||!sub){showNotice('請先選擇分類、主目標與子任務。');return;}
-    addFlowKey(`s::${folder.id}::${goal.id}::${sub.id}`);return;
-  }
-  const select=$(type==='manifestation'?'flowManifestationSelect':'flowRoutineSelect');if(!select){showNotice('心想事成請在上方輸入「踏出什麼」後直接加入流程圖。');return;}addFlowKey(select.value);select.value='';
-}
-function moveFlowItem(index,delta){if(index<0||index>=flowSequence.length)return;const target=index+delta;if(target<0||target>=flowSequence.length)return;const [item]=flowSequence.splice(index,1);flowSequence.splice(target,0,item);save();refreshFlowUi();}
-function completeFlowItem(index){const entry=flowSequence[index];if(!entry)return;const src=resolveFlowEntry(entry);if(src.done){showNotice(`「${src.title}」已完成。`);return;}if(src.type==='manifestation'){completeManifestation(src.id);return;}if(src.type==='routine'){completeRoutine(src.id);return;}if(src.type==='checklist'){toggleChecklistGoal(src.folderId,src.id,true);return;}if(src.type==='subtask'){toggleChecklistSubtask(src.folderId,src.parentId,src.id,true);return;}showNotice('此項目的來源已不存在，請移除後重新加入。');}
-function undoFlowItem(index){const entry=flowSequence[index];if(!entry)return;const src=resolveFlowEntry(entry);if(!src.done)return;if(src.type==='checklist'){toggleChecklistGoal(src.folderId,src.id,false);return;}if(src.type==='subtask'){toggleChecklistSubtask(src.folderId,src.parentId,src.id,false);return;}showNotice('此項目不能從流程圖取消完成。');}
-function handleFlowClick(e){const add=e.target.closest('button[data-flow-add]');if(add){addFlowItem(add.dataset.flowAdd);return;}const btn=e.target.closest('button[data-flow-action]');if(!btn)return;const index=Number(btn.dataset.flowIndex);const action=btn.dataset.flowAction;if(action==='countdown')startFlowCountdown(index);else if(action==='up')moveFlowItem(index,-1);else if(action==='down')moveFlowItem(index,1);else if(action==='remove'){const removed=flowSequence.splice(index,1)[0];save();refreshFlowUi();if(removed)showNotice(`已從流程圖移除「${resolveFlowEntry(removed).title}」。`);}else if(action==='complete')completeFlowItem(index);else if(action==='undo')undoFlowItem(index);else if(action==='delete-manifestation'){const src=resolveFlowEntry(flowSequence[index]);if(src.type==='manifestation')deleteManifestation(src.id);}else if(action==='reopen'){const src=resolveFlowEntry(flowSequence[index]);if(src.type==='manifestation')reopenManifestation(src.id);}}
 
 
-function renderAll(){renderScore();renderManifestations();renderRoutine();renderEndurance();renderChecklist();}
-function askConfirm(title,text,callback){$('modalTitle').textContent=title;$('modalText').textContent=text;$('modalBackdrop').classList.add('show');modalCallback=callback;}
-function closeModal(run){$('modalBackdrop').classList.remove('show');const cb=modalCallback;modalCallback=null;if(run&&cb)cb();}
-function downloadFile(name,content,type){const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);}
-function exportBackup(){const data={app:'帶著恐懼前進｜心想事成、Routine、忍耐清單、流程圖與目標清單',version:8,exportedAt:new Date().toISOString(),lifeScore,scoreLog,manifestationGoals,goalFolders,enduranceItems,routineItems,flowSequence};downloadFile('心想事成_Routine_忍耐清單_排序流程圖與目標Checklist_完整備份.json',JSON.stringify(data,null,2),'application/json;charset=utf-8');showNotice('完整備份已準備下載，包含 Routine 與每日完成歷史、心想事成、忍耐清單、排序流程圖、Checklist 主目標與子任務、人生分數。');}
-function exportCsv(){const header=['踏出什麼','狀態','建立時間','開始時間','完工時間','本次入帳分數','完成了什麼','紀錄感受'];const quote=v=>'"'+safeString(v).replace(/"/g,'""')+'"';const rows=[header.map(quote).join(',')];manifestationGoals.forEach(g=>rows.push([g.title,g.completed?'已完工':(g.startedAt?'進行中':'尚未開始'),new Date(g.createdAt).toLocaleString('zh-TW'),g.startedAt?new Date(g.startedAt).toLocaleString('zh-TW'):'',g.completedAt?new Date(g.completedAt).toLocaleString('zh-TW'):'',g.scoreAwardedAmount||0,g.actual,g.feeling].map(quote).join(',')));downloadFile('心想事成紀錄.csv','﻿'+rows.join('\r\n'),'text/csv;charset=utf-8');showNotice('心想事成紀錄 CSV 已準備下載。');}
-function normaliseImportedGoals(data){return normaliseManifestations(data);}
-function importBackup(e){const file=e.target.files&&e.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const data=JSON.parse(r.result);if(!data||typeof data!=='object'||Array.isArray(data))throw new Error('format');const newScore=Number.isFinite(Number(data.lifeScore))?clampScore(Number(data.lifeScore)):0;const newLog=Array.isArray(data.scoreLog)?data.scoreLog:[];const newGoals=normaliseImportedGoals(data.manifestationGoals);const newFolders=Array.isArray(data.goalFolders)?normaliseFolders(data.goalFolders):cloneDefaultFolders();const newEndurance=Array.isArray(data.enduranceItems)?normaliseEnduranceItems(data.enduranceItems):enduranceItems.map(x=>({...x}));const newRoutines=Array.isArray(data.routineItems)?normaliseRoutineItems(data.routineItems):cloneRoutineItems(routineItems);const newFlow=Array.isArray(data.flowSequence)?normaliseFlowSequence(data.flowSequence):[];if(Number(data.version||0)<8){newGoals.filter(g=>!g.completed).forEach(g=>{const key=`m::${g.id}`;if(!newFlow.some(entry=>entry.key===key))newFlow.push({id:makeId(),key,titleSnapshot:g.title,groupSnapshot:'心想事成',addedAt:Date.now()});});}const legacyNotes=[!Array.isArray(data.enduranceItems)?'舊版備份沒有忍耐清單欄位；目前忍耐清單會保留。':'',!Array.isArray(data.routineItems)?'此備份沒有 Routine 欄位；目前 Routine 及每日完成歷史會保留。':''].filter(Boolean);const legacyNote=legacyNotes.length?'\n'+legacyNotes.join('\n'):'';askConfirm('匯入完整備份？','這會取代目前的人生分數、心想事成目標及 Checklist。'+legacyNote+'請確認已先下載目前資料的備份。',()=>{try{if('speechSynthesis' in window)window.speechSynthesis.cancel();}catch(err){}manifestationCountdowns.clear();routineCountdowns.clear();flowCountdowns.clear();setManifestationFormBusy(false);lifeScore=newScore;scoreLog=newLog;manifestationGoals=newGoals;goalFolders=newFolders;enduranceItems=newEndurance;routineItems=newRoutines;flowSequence=newFlow;save();renderAll();showNotice('備份匯入完成，Routine、忍耐清單及其他資料已處理。');});}catch(err){showNotice('匯入失敗：請選擇本工具匯出的完整 JSON 備份。');}e.target.value='';};r.onerror=()=>showNotice('無法讀取備份檔。');r.readAsText(file);}
-function bindEvents(){
-  $('routineForm').addEventListener('submit',e=>{e.preventDefault();const input=$('newRoutineTitle');addRoutine(input.value);input.value='';});
-  $('routineItems').addEventListener('click',e=>{const b=e.target.closest('button[data-routine-action]');if(!b)return;const id=b.dataset.routineId;const action=b.dataset.routineAction;if(action==='countdown')startRoutineCountdown(id);else if(action==='complete')completeRoutine(id);else if(action==='delete')deleteRoutine(id);});
-  $('enduranceForm').addEventListener('submit',e=>{e.preventDefault();const input=$('newEnduranceTitle');addEnduranceItem(input.value);input.value='';});
-  $('activeEnduranceItems').addEventListener('click',e=>{const b=e.target.closest('button[data-endurance-action]');if(!b)return;const id=b.dataset.enduranceId;const action=b.dataset.enduranceAction;if(action==='start')startEndurance(id);else if(action==='end')endEndurance(id);else if(action==='delete')deleteEndurance(id);});
-  $('endedEnduranceItems').addEventListener('click',e=>{const b=e.target.closest('button[data-endurance-action]');if(!b)return;const id=b.dataset.enduranceId;const action=b.dataset.enduranceAction;if(action==='restart')restartEndurance(id);else if(action==='delete')deleteEndurance(id);});
-  $('newManifestationForm').addEventListener('submit',e=>{e.preventDefault();const input=$('newManifestationTitle');const title=input.value.trim();if(!title)return;const result=addManifestation(title);if(result)input.value='';});
-  $('flowChart').addEventListener('input',e=>{const field=e.target.dataset.manifestationField,goalId=e.target.dataset.goalId;if(field&&goalId){setManifestationField(goalId,field,e.target.value);if(field==='title'){const node=e.target.closest('.flow-node'),title=node&&node.querySelector('.flow-node-title');if(title)title.textContent=e.target.value;}}});
-  $('completedManifestations').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const id=b.dataset.goalId;if(b.matches('[data-reopen-goal]'))reopenManifestation(id);else if(b.matches('[data-delete-manifestation]'))deleteManifestation(id);});
-  $('completedSearch').addEventListener('input',renderManifestations);
-  $('folderCreateForm').addEventListener('submit',e=>{e.preventDefault();addFolder($('newFolderName').value);$('newFolderName').value='';});
-  $('goalFolders').addEventListener('change',e=>{const sub=e.target.closest('[data-subtask-toggle]');if(sub){toggleChecklistSubtask(sub.dataset.folderId,sub.dataset.itemId,sub.dataset.subtaskId,sub.checked);return;}const cb=e.target.closest('[data-checklist-toggle]');if(cb)toggleChecklistGoal(cb.dataset.folderId,cb.dataset.itemId,cb.checked);});
-  $('goalFolders').addEventListener('click',e=>{const b=e.target.closest('button[data-checklist-action]');if(!b)return;const a=b.dataset.checklistAction,f=b.dataset.folderId,i=b.dataset.itemId,st=b.dataset.subtaskId;if(a==='rename-folder')renameFolder(f);else if(a==='delete-folder')deleteFolder(f);else if(a==='rename-item')renameChecklistGoal(f,i);else if(a==='delete-item')deleteChecklistGoal(f,i);else if(a==='rename-subtask')renameChecklistSubtask(f,i,st);else if(a==='delete-subtask')deleteChecklistSubtask(f,i,st);});
-  $('goalFolders').addEventListener('submit',e=>{const subForm=e.target.closest('form.add-subtask-form');if(subForm){e.preventDefault();const input=subForm.elements.subtaskTitle;addSubtask(subForm.dataset.folderId,subForm.dataset.itemId,input.value);return;}const form=e.target.closest('form.add-goal-form');if(!form)return;e.preventDefault();const input=form.elements.goalTitle;addGoal(form.dataset.folderId,input.value);});
-  $('goalSearch').addEventListener('input',renderChecklist);$('expandGoalsBtn').addEventListener('click',()=>document.querySelectorAll('.goal-folder').forEach(d=>d.open=true));$('collapseGoalsBtn').addEventListener('click',()=>document.querySelectorAll('.goal-folder').forEach(d=>d.open=false));
-  $('scoreAddBtn').addEventListener('click',()=>{const n=Number($('scoreDelta').value);if(!Number.isInteger(n)||n<0){showNotice('請輸入 0 或正整數作為調整量。');return;}adjustScore(n,'手動加分');});
-  $('scoreSubtractBtn').addEventListener('click',()=>{const n=Number($('scoreDelta').value);if(!Number.isInteger(n)||n<0){showNotice('請輸入 0 或正整數作為調整量。');return;}adjustScore(-n,'手動扣分');});
-  $('scoreSetBtn').addEventListener('click',()=>{const n=Number($('scoreSetValue').value);if(!Number.isFinite(n)||n<0||n>SCORE_MAX){showNotice('人生分數必須介於 0 到 100。');return;}const target=clampScore(n),diff=roundScore(target-lifeScore);lifeScore=target;scoreLog.unshift({id:makeId(),amount:diff,reason:'手動直接設定分數',at:Date.now(),scoreAfter:lifeScore});save();renderScore();showNotice(`人生分數已設定為 ${formatScore(lifeScore)}。`);});
-  $('flowSection').addEventListener('click',handleFlowClick);
-  ['flowRoutineSearch','flowChecklistSearch'].forEach(id=>$(id).addEventListener('input',refreshFlowUi));
-  ['flowChecklistFolder','flowChecklistGoal'].forEach(id=>$(id).addEventListener('change',renderChecklistFlowSelectors));
-  $('flowChecklistSubtask').addEventListener('change',()=>{const folder=folderById($('flowChecklistFolder').value),goal=itemById(folder,$('flowChecklistGoal').value),sub=subtaskById(goal,$('flowChecklistSubtask').value);$('flowAddChecklistSubtask').disabled=!sub;});
-  $('exportBackupBtn').addEventListener('click',exportBackup);$('exportCsvBtn').addEventListener('click',exportCsv);$('importBackupBtn').addEventListener('click',()=>$('backupFile').click());$('backupFile').addEventListener('change',importBackup);$('modalCancel').addEventListener('click',()=>closeModal(false));$('modalConfirm').addEventListener('click',()=>closeModal(true));$('modalBackdrop').addEventListener('click',e=>{if(e.target===$('modalBackdrop'))closeModal(false);});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal(false);});
+/* =========================================================
+   重新取得 Wake Lock
+   ========================================================= */
+
+document.addEventListener(
+    "visibilitychange",
+    async () => {
+
+        if (
+            document.visibilityState === "visible" &&
+            running
+        ) {
+
+            await requestWakeLock();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   釋放 Wake Lock
+   ========================================================= */
+
+async function releaseWakeLock() {
+
+    if (wakeLock) {
+
+        try {
+
+            await wakeLock.release();
+
+        }
+
+        catch (error) {
+
+        }
+
+        wakeLock = null;
+
+    }
+
 }
-load();bindEvents();renderAll();setInterval(()=>renderRoutine(),60000);
+
+
+/* =========================================================
+   總次數
+   ========================================================= */
+
+function getTotalReps() {
+
+    return parseInt(
+        repSelect.value,
+        10
+    );
+
+}
+
+
+/* =========================================================
+   語音
+
+   重要：
+
+   每一下開始：
+
+       「一、四」
+
+   4 秒後：
+
+       「二」
+
+   不再讀「零」。
+   ========================================================= */
+
+function speak(text) {
+
+    if (
+        !("speechSynthesis" in window)
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+       清除之前等待中的語音。
+
+       避免語音排隊造成：
+       四四
+       二二
+       等問題。
+    */
+
+    window.speechSynthesis.cancel();
+
+
+    const utterance =
+        new SpeechSynthesisUtterance(text);
+
+
+    /*
+       繁體中文
+    */
+
+    utterance.lang = "zh-TW";
+
+
+    /*
+       語速
+    */
+
+    utterance.rate = 0.9;
+
+
+    /*
+       音調
+    */
+
+    utterance.pitch = 1.0;
+
+
+    /*
+       音量
+    */
+
+    utterance.volume = 1.0;
+
+
+    window.speechSynthesis.speak(
+        utterance
+    );
+
+}
+
+
+/* =========================================================
+   更新畫面
+   ========================================================= */
+
+function updateDisplay(seconds) {
+
+    timerElement.textContent =
+        Math.max(
+            0,
+            seconds
+        ).toFixed(1);
+
+
+    repNumberElement.textContent =
+        currentRep;
+
+
+    if (
+        currentPhase === "down"
+    ) {
+
+        phaseElement.textContent =
+            "下降";
+
+    }
+
+    else if (
+        currentPhase === "zero"
+    ) {
+
+        phaseElement.textContent =
+            "0 秒";
+
+    }
+
+    else if (
+        currentPhase === "up"
+    ) {
+
+        phaseElement.textContent =
+            "上升";
+
+    }
+
+}
+
+
+/* =========================================================
+   第一下開始
+   ========================================================= */
+
+function startDownPhase() {
+
+    currentPhase = "down";
+
+    phaseDuration = 4000;
+
+    phaseStartTime =
+        performance.now();
+
+
+    /*
+       這一次語音是：
+
+       一、四
+
+       下一下：
+
+       二、四
+
+       三、四
+
+       ...
+
+       十、四
+    */
+
+    speak(
+        chineseNumbers[currentRep] +
+        "、四"
+    );
+
+
+    updateDisplay(4);
+
+    animate();
+
+}
+
+
+/* =========================================================
+   0 秒
+   ========================================================= */
+
+function startZeroPhase() {
+
+    currentPhase = "zero";
+
+
+    /*
+       顯示 0
+
+       不播放任何語音。
+    */
+
+    updateDisplay(0);
+
+
+    /*
+       0 秒沒有停頓時間，
+       直接進入 2 秒。
+
+       很短的延遲讓畫面能刷新。
+    */
+
+    setTimeout(
+        () => {
+
+            if (!running) {
+
+                return;
+
+            }
+
+            startUpPhase();
+
+        },
+        20
+    );
+
+}
+
+
+/* =========================================================
+   2 秒
+   ========================================================= */
+
+function startUpPhase() {
+
+    currentPhase = "up";
+
+    phaseDuration = 2000;
+
+    phaseStartTime =
+        performance.now();
+
+
+    /*
+       這裡只說：
+
+       二
+    */
+
+    speak("二");
+
+
+    updateDisplay(2);
+
+    animate();
+
+}
+
+
+/* =========================================================
+   精準計時
+   ========================================================= */
+
+function animate() {
+
+
+    if (
+        animationFrame !== null
+    ) {
+
+        cancelAnimationFrame(
+            animationFrame
+        );
+
+    }
+
+
+    function frame(now) {
+
+
+        if (!running) {
+
+            return;
+
+        }
+
+
+        const elapsed =
+            now - phaseStartTime;
+
+
+        const remaining =
+            (
+                phaseDuration -
+                elapsed
+            ) / 1000;
+
+
+        updateDisplay(
+            remaining
+        );
+
+
+        /*
+           目前 phase 結束
+        */
+
+        if (
+            elapsed >= phaseDuration
+        ) {
+
+
+            /*
+               4 秒結束
+
+               → 0 秒
+            */
+
+            if (
+                currentPhase === "down"
+            ) {
+
+                startZeroPhase();
+
+                return;
+
+            }
+
+
+            /*
+               2 秒結束
+
+               → 完成一個 4-0-2
+            */
+
+            if (
+                currentPhase === "up"
+            ) {
+
+                completeRep();
+
+                return;
+
+            }
+
+        }
+
+
+        animationFrame =
+            requestAnimationFrame(
+                frame
+            );
+
+    }
+
+
+    animationFrame =
+        requestAnimationFrame(
+            frame
+        );
+
+}
+
+
+/* =========================================================
+   完成一個 4-0-2
+   ========================================================= */
+
+function completeRep() {
+
+
+    /*
+       最後一下
+    */
+
+    if (
+        currentRep >= getTotalReps()
+    ) {
+
+        finishWorkout();
+
+        return;
+
+    }
+
+
+    /*
+       進入下一下
+    */
+
+    currentRep++;
+
+
+    statusElement.textContent =
+        "準備第 " +
+        currentRep +
+        " 下";
+
+
+    /*
+       很短的間隔。
+
+       然後新的：
+
+       「二、四」
+    */
+
+    setTimeout(
+        () => {
+
+            if (!running) {
+
+                return;
+
+            }
+
+            startDownPhase();
+
+        },
+        250
+    );
+
+}
+
+
+/* =========================================================
+   開始
+   ========================================================= */
+
+async function startWorkout() {
+
+
+    /*
+       如果已完成，
+       重新開始。
+    */
+
+    if (
+        !running &&
+        currentRep > getTotalReps()
+    ) {
+
+        resetWorkout();
+
+    }
+
+
+    /*
+       第一次開始
+    */
+
+    if (
+        !running &&
+        !paused
+    ) {
+
+        currentRep = 1;
+
+        running = true;
+
+        paused = false;
+
+
+        statusElement.textContent =
+            "開始訓練";
+
+
+        /*
+           手機上由按鈕點擊開始，
+           有利於瀏覽器允許語音播放。
+        */
+
+        if (
+            "speechSynthesis" in window
+        ) {
+
+            speechSynthesis.cancel();
+
+        }
+
+
+        /*
+           保持螢幕亮著
+        */
+
+        await requestWakeLock();
+
+
+        /*
+           開始第一下
+        */
+
+        startDownPhase();
+
+        return;
+
+    }
+
+
+    /*
+       暫停後恢復
+    */
+
+    if (paused) {
+
+        running = true;
+
+        paused = false;
+
+
+        phaseStartTime =
+            performance.now();
+
+
+        phaseDuration =
+            pausedRemaining * 1000;
+
+
+        statusElement.textContent =
+            "繼續";
+
+
+        await requestWakeLock();
+
+
+        /*
+           恢復時不重新唸：
+
+           一、四
+           或
+           二
+
+           只繼續原本計時。
+        */
+
+        animate();
+
+    }
+
+}
+
+
+/* =========================================================
+   暫停
+   ========================================================= */
+
+function pauseWorkout() {
+
+
+    if (!running) {
+
+        return;
+
+    }
+
+
+    const now =
+        performance.now();
+
+
+    const elapsed =
+        now - phaseStartTime;
+
+
+    pausedRemaining =
+        Math.max(
+            0,
+            (
+                phaseDuration -
+                elapsed
+            ) / 1000
+        );
+
+
+    running = false;
+
+    paused = true;
+
+
+    if (
+        animationFrame !== null
+    ) {
+
+        cancelAnimationFrame(
+            animationFrame
+        );
+
+        animationFrame = null;
+
+    }
+
+
+    /*
+       停止語音
+    */
+
+    if (
+        "speechSynthesis" in window
+    ) {
+
+        speechSynthesis.cancel();
+
+    }
+
+
+    phaseElement.textContent =
+        "已暫停";
+
+
+    statusElement.textContent =
+        "按「開始」繼續";
+
+
+    releaseWakeLock();
+
+}
+
+
+/* =========================================================
+   完成
+   ========================================================= */
+
+function finishWorkout() {
+
+
+    running = false;
+
+    paused = false;
+
+
+    if (
+        animationFrame !== null
+    ) {
+
+        cancelAnimationFrame(
+            animationFrame
+        );
+
+        animationFrame = null;
+
+    }
+
+
+    currentPhase = "finished";
+
+
+    timerElement.textContent =
+        "✓";
+
+
+    phaseElement.textContent =
+        "完成！";
+
+
+    phaseElement.classList.add(
+        "finished"
+    );
+
+
+    repNumberElement.textContent =
+        getTotalReps();
+
+
+    statusElement.textContent =
+        "完成 " +
+        getTotalReps() +
+        " 下";
+
+
+    /*
+       不播放「完成訓練」。
+
+       你要求語音只有：
+
+       一四
+       二
+       三四
+       二
+       ...
+
+       十四
+       二
+    */
+
+
+    currentRep =
+        getTotalReps() + 1;
+
+
+    releaseWakeLock();
+
+}
+
+
+/* =========================================================
+   重設
+   ========================================================= */
+
+function resetWorkout() {
+
+
+    running = false;
+
+    paused = false;
+
+
+    if (
+        animationFrame !== null
+    ) {
+
+        cancelAnimationFrame(
+            animationFrame
+        );
+
+        animationFrame = null;
+
+    }
+
+
+    /*
+       停止所有語音
+    */
+
+    if (
+        "speechSynthesis" in window
+    ) {
+
+        speechSynthesis.cancel();
+
+    }
+
+
+    releaseWakeLock();
+
+
+    currentRep = 1;
+
+    currentPhase = "down";
+
+    phaseDuration = 4000;
+
+    pausedRemaining = 4000;
+
+
+    phaseElement.classList.remove(
+        "finished"
+    );
+
+
+    phaseElement.textContent =
+        "準備開始";
+
+
+    timerElement.textContent =
+        "4.0";
+
+
+    repNumberElement.textContent =
+        "1";
+
+
+    statusElement.textContent =
+        "每一個 4-0-2 = 1 下";
+
+}
+
+
+/* =========================================================
+   次數改變
+   ========================================================= */
+
+repSelect.addEventListener(
+    "change",
+    resetWorkout
+);
+
+
+/* =========================================================
+   按鈕
+   ========================================================= */
+
+startBtn.addEventListener(
+    "click",
+    startWorkout
+);
+
+
+pauseBtn.addEventListener(
+    "click",
+    pauseWorkout
+);
+
+
+resetBtn.addEventListener(
+    "click",
+    resetWorkout
+);
+
+
+/* =========================================================
+   初始
+   ========================================================= */
+
+resetWorkout();
+
 </script>
+
 </body>
+
 </html>
+```
